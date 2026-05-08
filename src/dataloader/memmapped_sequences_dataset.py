@@ -10,6 +10,7 @@ import json
 import torch
 import shutil
 import ctypes
+import ctypes.util
 import numpy as np
 from collections import defaultdict
 from torch.utils.data import Dataset
@@ -224,9 +225,18 @@ class MemMappedSequencesDataset(Dataset, SequencesDataset):
         if not hasattr(self, "madvise"):
             # https://github.com/numpy/numpy/issues/13172
             # Doesn't seem to help our speed
-            self.madvise = ctypes.CDLL("libc.so.6").madvise
-            self.madvise.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_double]
-            self.madvise.restype = ctypes.c_double
+            libc_name = ctypes.util.find_library('c')
+            if libc_name is None:
+                # Fallback for some systems
+                libc_name = 'libc.dylib' if torch.backends.mps.is_available() else 'libc.so.6'
+            
+            try:
+                self.madvise = ctypes.CDLL(libc_name).madvise
+                self.madvise.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_int]
+                self.madvise.restype = ctypes.c_int
+            except Exception as e:
+                log.warning(f"Could not load madvise: {e}. Performance might be affected.")
+                self.madvise = lambda *args: 0
 
         seq_desc = self.data_descriptions[seq_idx]
         if self.keep_all_memmap_open:

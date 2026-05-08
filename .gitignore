@@ -8,3 +8,4 @@ tlio_golden
 *outputs*
 .env
 .vscode
+models/resnet/logs
