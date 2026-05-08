@@ -11,14 +11,23 @@ class MeasSourceTorchScript:
     def __init__(self, model_path, force_cpu=False):
         # load trained network model
         logging.info("Loding {}...".format(model_path))
-        if not torch.cuda.is_available() or force_cpu:
+        
+    
+        if torch.backends.mps.is_available():
+            self.device = torch.device("mps")
+            self.net = torch.jit.load(model_path, map_location="mps")
+        elif torch.cuda.is_available():
+            self.device = torch.device("cuda:0")
+            self.net = torch.jit.load(model_path, map_location="cuda:0")
+        else:
             torch.init_num_threads()
             torch.set_num_threads(1)
             torch.set_num_interop_threads(1)
             self.device = torch.device("cpu")
             self.net = torch.jit.load(model_path, map_location="cpu")
-        else:
-            self.device = torch.device("cuda:0")
+
+            
+                
             # NOTE TLIO baseline model won't work on GPU unless we ass map_location
             # https://github.com/pytorch/pytorch/issues/78207
             self.net = torch.jit.load(model_path, map_location=self.device)

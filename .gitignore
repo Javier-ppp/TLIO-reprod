@@ -6,3 +6,5 @@ __pycache__
 *.swo
 tlio_golden
 *outputs*
+.env
+.vscode

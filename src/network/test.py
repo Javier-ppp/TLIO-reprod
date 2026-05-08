@@ -515,9 +515,14 @@ def net_test(args):
     test_list_path = osp.join(args.root_dir, "test_list.txt")
     test_list = get_datalist(test_list_path)
 
-    device = torch.device(
-        "cuda:0" if torch.cuda.is_available() and not args.cpu else "cpu"
-    )
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
+
+    logging.info(f"Using device: {device}")
     checkpoint = torch.load(args.model_path, map_location=device)
     network = get_model(args.arch, net_config, args.input_dim, args.output_dim).to(
         device

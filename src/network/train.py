@@ -322,9 +322,13 @@ def net_train(args):
         logging.info("Validation set loaded.")
         logging.info(f"Number of val samples: {len(data.val_dataset)}")
 
-    device = torch.device(
-        "cuda:0" if torch.cuda.is_available() and not args.cpu else "cpu"
-    )
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
+    logging.info(f"Using device: {device}")
     network = get_model(args.arch, net_config, args.input_dim, args.output_dim)
     network.to(device)
     total_params = network.get_num_params()

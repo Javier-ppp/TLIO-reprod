@@ -18,14 +18,16 @@ def load_and_convert(args):
     net = get_model(args.arch, net_config, 6, 3)
 
     # load trained network model
-    if not torch.cuda.is_available() or args.cpu:
-        device = torch.device("cpu")
-        checkpoint = torch.load(
-            args.model_path, map_location=lambda storage, location: storage
-        )
-    else:
-        device = torch.device("cuda:0")
+
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
         checkpoint = torch.load(args.model_path)
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+        checkpoint = torch.load(args.model_path)
+    else:
+        device = torch.device("cpu")
+        checkpoint = torch.load(args.model_path, map_location=device)
 
     net.load_state_dict(checkpoint["model_state_dict"])
     net.eval().to(device)
