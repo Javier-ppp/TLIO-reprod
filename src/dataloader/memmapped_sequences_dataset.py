@@ -235,8 +235,8 @@ class MemMappedSequencesDataset(Dataset, SequencesDataset):
                 self.madvise.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_int]
                 self.madvise.restype = ctypes.c_int
             except Exception as e:
-                log.warning(f"Could not load madvise: {e}. Performance might be affected.")
-                self.madvise = lambda *args: 0
+                raise Exception(f"Madvise not found (library used: {libc_name}): {e}. "
+                                "Data loading stopped. Please ensure system C libraries are installed.")
 
         seq_desc = self.data_descriptions[seq_idx]
         if self.keep_all_memmap_open:

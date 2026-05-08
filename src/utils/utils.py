@@ -17,6 +17,8 @@ def make_recursive_func(func):
 @make_recursive_func
 def to_device(args, device):
     if isinstance(args, torch.Tensor):
+        if device.type == 'mps' and args.dtype == torch.float64:
+            return args.to(device, dtype=torch.float32)
         return args.to(device)
     elif isinstance(args, str) or isinstance(args, float) or isinstance(args, int):
         return args

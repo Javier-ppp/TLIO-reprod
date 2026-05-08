@@ -1,7 +1,7 @@
 {
     "accel_bias_range": 0.2,
     "arch": "resnet",
-    "batch_size": 1024,
+    "batch_size": 256,
     "continue_from": null,
     "cpu": false,
     "dataset_style": "mmap",
