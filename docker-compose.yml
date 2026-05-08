@@ -1,0 +1,18 @@
+services:
+  tlio:
+    build: .
+    image: tlio:latest
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    shm_size: '2gb'
+    command: conda run --no-capture-output -n tlio python src/main_net.py --help
+
+  tensorboard:
+    image: tlio:latest
+    volumes:
+      - .:/app
+    ports:
+      - "6006:6006"
+    command: conda run --no-capture-output -n tlio tensorboard --logdir models/ --host 0.0.0.0 --port 6006

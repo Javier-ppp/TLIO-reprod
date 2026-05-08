@@ -4,5 +4,5 @@ __pycache__
 *.pyc
 *.swp
 *.swo
-models
+tlio_golden
 *outputs*

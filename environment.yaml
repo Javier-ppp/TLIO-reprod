@@ -5,10 +5,17 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - cudatoolkit=11.3 # Leave official torch distro here so it knows the cuda vers
   - python=3.9.7
-  - pytorch=1.11.0
-  - pytorch3d
+  - pytorch
+  - cpuonly
   - pip
+  - numpy
+  - numba
+  - pandas
+  - scipy
+  - matplotlib
+  - tqdm
+  - h5py
+  - setuptools=69.5.1
   - pip:
     - -r requirements.txt
