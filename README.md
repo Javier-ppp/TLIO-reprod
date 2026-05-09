@@ -1,4 +1,4 @@
-<div style="background-color: #e6f3ff; padding: 15px; border-radius: 10px; border: 1px solid #b3d7ff; color: #003366; margin-bottom: 20px;">
+<div style="background-color: #5793ccff; padding: 15px; border-radius: 10px; border: 1px solid #b3d7ff; color: #003366; margin-bottom: 20px;">
 <strong>Fork Information:</strong> This is a fork of the original work, meant to reproduce the results presented in the paper.
 
 The fork offers the following improvements on the original repo:
@@ -32,11 +32,12 @@ conda activate tlio
 
 Next commands should be run from this environment.
 
-<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
+<div style="background-color: #5793ccff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
 <strong>Comment 1:</strong> For improved compatibility, you can also use Docker. Download Docker <a href="https://www.docker.com/products/docker-desktop/">here</a> and then build the container using:
 <pre><code>docker build -t tlio .</code></pre>
 </div>
 Next commands should be run from within the Docker container. To start a session in the container use:
+
 ```shell script
 docker run -it --gpus all -v $(pwd):/app tlio
 ```
@@ -53,6 +54,7 @@ mkdir -p local_data/ # or ln -s /path/to/data_drive/ local_data/
 unzip golden-new-format-cc-by-nc-with-imus-v1.5.zip -d local_data/
 rm golden-new-format-cc-by-nc-with-imus-v1.5.zip
 ```
+
 <https://drive.google.com/file/d/14YKW7PsozjHo_EdxivKvumsQB7JMw1eg/view?usp=share_link>
 The dataset tree structure looks like this.
 Assume for the examples we have extracted the data under root directory `local_data/tlio_golden`:
@@ -118,7 +120,7 @@ for some reason (it seems to work best on personal desktops).
 If the training is getting killed by your OS or taking up too much RAM,
 you may try setting `--workers` to 1, `--dataset_style` to `ram`, and/or `--no-persistent_workers`.
 
-<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
+<div style="background-color: #5793ccff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
 <strong>Comment 2:</strong> We have added a memory efficient mode for the <code>resnet_seq</code> model. While the original code is optimal for reproducibility and transparency, it was frequently choking on GPU memory. This mode allows training on systems with limited VRAM (less than 16GB).
 </div>
 
@@ -257,7 +259,7 @@ python3 src/main_filter.py \
 
 Please refer to `main_filter.py` for a full list of parameters.
 
-<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
+<div style="background-color: #5793ccff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
 <strong>Comment 3:</strong> Note on 3D visualization: The Open3D library is currently incompatible with Mac memory management. We have modified the filter to work without visualization by default; however, the program will still crash if the <code>--visualize</code> parameter is set to true on macOS.
 </div>
 
