@@ -32,16 +32,16 @@ Next commands should be run from this environment.
 
 > [!NOTE]
 > **Comment 1:** For improved compatibility, you can also use Docker. Download Docker [here](https://www.docker.com/products/docker-desktop/) and then build the container using:
-
+>
 > ```shell script
 > docker build -t tlio .
 > ```
 >
-Next commands should be run from within the Docker container. To start a session in the container use:
+> Next commands should be run from within the Docker container. To start a session in the container use:
 
-```shell script
-docker run -it --gpus all -v $(pwd):/app tlio
-```
+> ```shell script
+> docker run -it --gpus all -v $(pwd):/app tlio
+> ```
 
 # Dataset
 
