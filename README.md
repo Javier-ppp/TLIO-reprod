@@ -8,6 +8,7 @@
 > - Independently (from the research team) generated weights and benchmarks from the original code
 > - A memory efficient mode for the seq2seq ResNet model (allows training on systems with < 16GB VRAM)
 
+We included notes throughout the document to highlight the changes and updates from the original repo. Our notes use the GitHub `[NOTE]` block style, while the notes from the article authors use plain bold text.
 ---
 
 <!-- Transition to original text -->
@@ -38,7 +39,7 @@ Next commands should be run from this environment.
 > ```
 >
 > Next commands should be run from within the Docker container. To start a session in the container use:
-
+>
 > ```shell script
 > docker run -it --gpus all -v $(pwd):/app tlio
 > ```
@@ -123,6 +124,8 @@ you may try setting `--workers` to 1, `--dataset_style` to `ram`, and/or `--no-p
 
 > [!NOTE]
 > **Comment 2:** We have added a memory efficient mode for the `resnet_seq` model. While the original code is optimal for reproducibility and transparency, it was frequently choking on GPU memory. This mode allows training on systems with limited VRAM (less than 16GB).
+
+Tensorboard logs can be viewed with:
 
 ```shell script
 tensorboard --logdir models/resnet/logs/
