@@ -1,14 +1,12 @@
-<div style="background-color: #5793ccff; padding: 15px; border-radius: 10px; border: 1px solid #b3d7ff; color: #003366; margin-bottom: 20px;">
-<strong>Fork Information:</strong> This is a fork of the original work, meant to reproduce the results presented in the paper.
-
-The fork offers the following improvements on the original repo:
-<ul>
-  <li>Compatibility with M series Mac chips</li>
-  <li>A Dockerfile to expand on compatibility and reproducibility</li>
-  <li>Independently (from the research team) generated weights and benchmarks from the original code</li>
-  <li>A memory efficient mode for the seq2seq ResNet model (allows training on systems with < 16GB VRAM)</li>
-</ul>
-</div>
+> [!IMPORTANT]
+> **Fork Information:** This is a fork of the original work, meant to reproduce the results presented in the paper.
+>
+> The fork offers the following improvements on the original repo:
+>
+> - Compatibility with M series Mac chips
+> - A Dockerfile to expand on compatibility and reproducibility
+> - Independently (from the research team) generated weights and benchmarks from the original code
+> - A memory efficient mode for the seq2seq ResNet model (allows training on systems with < 16GB VRAM)
 
 ---
 
@@ -32,10 +30,13 @@ conda activate tlio
 
 Next commands should be run from this environment.
 
-<div style="background-color: #5793ccff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
-<strong>Comment 1:</strong> For improved compatibility, you can also use Docker. Download Docker <a href="https://www.docker.com/products/docker-desktop/">here</a> and then build the container using:
-<pre><code>docker build -t tlio .</code></pre>
-</div>
+> [!NOTE]
+> **Comment 1:** For improved compatibility, you can also use Docker. Download Docker [here](https://www.docker.com/products/docker-desktop/) and then build the container using:
+
+> ```shell script
+> docker build -t tlio .
+> ```
+>
 Next commands should be run from within the Docker container. To start a session in the container use:
 
 ```shell script
@@ -120,9 +121,8 @@ for some reason (it seems to work best on personal desktops).
 If the training is getting killed by your OS or taking up too much RAM,
 you may try setting `--workers` to 1, `--dataset_style` to `ram`, and/or `--no-persistent_workers`.
 
-<div style="background-color: #5793ccff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
-<strong>Comment 2:</strong> We have added a memory efficient mode for the <code>resnet_seq</code> model. While the original code is optimal for reproducibility and transparency, it was frequently choking on GPU memory. This mode allows training on systems with limited VRAM (less than 16GB).
-</div>
+> [!NOTE]
+> **Comment 2:** We have added a memory efficient mode for the `resnet_seq` model. While the original code is optimal for reproducibility and transparency, it was frequently choking on GPU memory. This mode allows training on systems with limited VRAM (less than 16GB).
 
 ```shell script
 tensorboard --logdir models/resnet/logs/
@@ -259,9 +259,8 @@ python3 src/main_filter.py \
 
 Please refer to `main_filter.py` for a full list of parameters.
 
-<div style="background-color: #5793ccff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
-<strong>Comment 3:</strong> Note on 3D visualization: The Open3D library is currently incompatible with Mac memory management. We have modified the filter to work without visualization by default; however, the program will still crash if the <code>--visualize</code> parameter is set to true on macOS.
-</div>
+> [!NOTE]
+> **Comment 3:** Note on 3D visualization: The Open3D library is currently incompatible with Mac memory management. We have modified the filter to work without visualization by default; however, the program will still crash if the `--visualize` parameter is set to true on macOS.
 
 ## Batch running filter on multiple models and parameters
 
