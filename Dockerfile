@@ -9,7 +9,9 @@ RUN apt-get update && apt-get install -y \
     git \
     build-essential \
     libgl1 \
+    libglib2.0-0 \
     libgomp1 \
+    libomp-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the environment file
@@ -36,6 +38,7 @@ COPY . .
 # Set the environment variable for Open3D (headless mode by default)
 ENV OS_ENV=linux
 ENV PYTHONUNBUFFERED=1
+ENV KMP_DUPLICATE_LIB_OK=TRUE
 
 # Default command: show help for the main script
 CMD ["conda", "run", "--no-capture-output", "-n", "tlio", "python", "src/main_net.py", "--help"]
