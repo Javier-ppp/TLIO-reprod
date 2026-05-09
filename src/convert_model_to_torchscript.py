@@ -33,7 +33,7 @@ def load_and_convert(args):
     net.eval().to(device)
     input_sequence_dim = past_data_size + disp_window_size
 
-    traced_cell = torch.jit.trace(net, torch.zeros(1, 6, input_sequence_dim))
+    traced_cell = torch.jit.trace(net, torch.zeros(1, 6, input_sequence_dim).to(device))
     traced_cell.save(args.out_dir + "/model_torchscript.pt")
 
 
