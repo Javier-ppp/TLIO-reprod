@@ -25,13 +25,20 @@ def torch_to_numpy(torch_arr):
     return torch_arr.cpu().detach().numpy()
 
 
-def get_inference(network, data_loader, device, epoch, transforms=[]):
+def get_inference(network, data_loader, device, epoch, transforms=[], memory_efficient=False):
     """
     Obtain attributes from a data loader given a network state
     Outputs all targets, predicts, predicted covariance params, and losses in numpy arrays
     Enumerates the whole data loader
     """
     targets_all, preds_all, preds_cov_all, losses_all = [], [], [], []
+    
+    # Aggregators for memory efficient mode
+    sum_loss = 0.0
+    sum_mse = None
+    total_samples = 0
+    sigmas_sampled = []
+
     network.eval()
 
     for bid, sample in enumerate(data_loader):
@@ -49,30 +56,64 @@ def get_inference(network, data_loader, device, epoch, transforms=[]):
 
         loss = get_loss(pred, pred_cov, targ, epoch)
 
-        targets_all.append(torch_to_numpy(targ))
-        preds_all.append(torch_to_numpy(pred))
-        preds_cov_all.append(torch_to_numpy(pred_cov))
-        losses_all.append(torch_to_numpy(loss))
+        if memory_efficient:
+            p = torch_to_numpy(pred)
+            t = torch_to_numpy(targ)
+            l = torch_to_numpy(loss)
+            pc = torch_to_numpy(pred_cov)
+            
+            sum_loss += l.sum()
+            batch_mse = ((t - p) ** 2).sum(axis=0)
+            if sum_mse is None:
+                sum_mse = batch_mse
+            else:
+                sum_mse += batch_mse
+            total_samples += p.shape[0]
+            
+            # Sub-sample sigmas for histogram (match original logic: take last step if seq)
+            pc_last = pc[:, :, -1] if len(pc.shape) == 3 else pc
+            if len(sigmas_sampled) < 20: # store ~20 batches worth of samples
+                sigmas_sampled.append(np.exp(pc_last))
+        else:
+            targets_all.append(torch_to_numpy(targ))
+            preds_all.append(torch_to_numpy(pred))
+            preds_cov_all.append(torch_to_numpy(pred_cov))
+            losses_all.append(torch_to_numpy(loss))
 
-    targets_all = np.concatenate(targets_all, axis=0)
-    preds_all = np.concatenate(preds_all, axis=0)
-    preds_cov_all = np.concatenate(preds_cov_all, axis=0)
-    losses_all = np.concatenate(losses_all, axis=0)
-    attr_dict = {
-        "targets": targets_all,
-        "preds": preds_all,
-        "preds_cov": preds_cov_all,
-        "losses": losses_all,
-    }
+    if memory_efficient:
+        attr_dict = {
+            "mse_mean": sum_mse / total_samples,
+            "ml_loss_mean": sum_loss / total_samples,
+            "sigmas_sampled": np.concatenate(sigmas_sampled, axis=0),
+            "losses": np.array([sum_loss / total_samples]) # for compatibility with some checks
+        }
+    else:
+        targets_all = np.concatenate(targets_all, axis=0)
+        preds_all = np.concatenate(preds_all, axis=0)
+        preds_cov_all = np.concatenate(preds_cov_all, axis=0)
+        losses_all = np.concatenate(losses_all, axis=0)
+        attr_dict = {
+            "targets": targets_all,
+            "preds": preds_all,
+            "preds_cov": preds_cov_all,
+            "losses": losses_all,
+        }
     return attr_dict
 
 
-def do_train(network, train_loader, device, epoch, optimizer, transforms=[]):
+def do_train(network, train_loader, device, epoch, optimizer, transforms=[], memory_efficient=False):
     """
     Train network for one epoch using a specified data loader
     Outputs all targets, predicts, predicted covariance params, and losses in numpy arrays
     """
     train_targets, train_preds, train_preds_cov, train_losses = [], [], [], []
+    
+    # Aggregators for memory efficient mode
+    sum_loss = 0.0
+    sum_mse = None
+    total_samples = 0
+    sigmas_sampled = []
+
     network.train()
 
     #for bid, (feat, targ, _, _) in enumerate(train_loader):
@@ -92,10 +133,29 @@ def do_train(network, train_loader, device, epoch, optimizer, transforms=[]):
 
         loss = get_loss(pred, pred_cov, targ, epoch)
 
-        train_targets.append(torch_to_numpy(targ))
-        train_preds.append(torch_to_numpy(pred))
-        train_preds_cov.append(torch_to_numpy(pred_cov))
-        train_losses.append(torch_to_numpy(loss))
+        if memory_efficient:
+            p = torch_to_numpy(pred)
+            t = torch_to_numpy(targ)
+            l = torch_to_numpy(loss)
+            pc = torch_to_numpy(pred_cov)
+            
+            sum_loss += l.sum()
+            batch_mse = ((t - p) ** 2).sum(axis=0)
+            if sum_mse is None:
+                sum_mse = batch_mse
+            else:
+                sum_mse += batch_mse
+            total_samples += p.shape[0]
+            
+            # Sub-sample sigmas for histogram
+            pc_last = pc[:, :, -1] if len(pc.shape) == 3 else pc
+            if len(sigmas_sampled) < 20: # store ~20 batches worth of samples
+                sigmas_sampled.append(np.exp(pc_last))
+        else:
+            train_targets.append(torch_to_numpy(targ))
+            train_preds.append(torch_to_numpy(pred))
+            train_preds_cov.append(torch_to_numpy(pred_cov))
+            train_losses.append(torch_to_numpy(loss))
             
         #print("Loss full: ", loss)
 
@@ -112,31 +172,48 @@ def do_train(network, train_loader, device, epoch, optimizer, transforms=[]):
         torch.nn.utils.clip_grad_norm_(network.parameters(), 0.1, error_if_nonfinite=True)
         optimizer.step()
 
-    train_targets = np.concatenate(train_targets, axis=0)
-    train_preds = np.concatenate(train_preds, axis=0)
-    train_preds_cov = np.concatenate(train_preds_cov, axis=0)
-    train_losses = np.concatenate(train_losses, axis=0)
-    train_attr_dict = {
-        "targets": train_targets,
-        "preds": train_preds,
-        "preds_cov": train_preds_cov,
-        "losses": train_losses,
-    }
+    if memory_efficient:
+        train_attr_dict = {
+            "mse_mean": sum_mse / total_samples,
+            "ml_loss_mean": sum_loss / total_samples,
+            "sigmas_sampled": np.concatenate(sigmas_sampled, axis=0),
+            "losses": np.array([sum_loss / total_samples])
+        }
+    else:
+        train_targets = np.concatenate(train_targets, axis=0)
+        train_preds = np.concatenate(train_preds, axis=0)
+        train_preds_cov = np.concatenate(train_preds_cov, axis=0)
+        train_losses = np.concatenate(train_losses, axis=0)
+        train_attr_dict = {
+            "targets": train_targets,
+            "preds": train_preds,
+            "preds_cov": train_preds_cov,
+            "losses": train_losses,
+        }
     return train_attr_dict
 
 
 def write_summary(summary_writer, attr_dict, epoch, optimizer, mode):
     """ Given the attr_dict write summary and log the losses """
 
-    mse_loss = np.mean((attr_dict["targets"] - attr_dict["preds"]) ** 2, axis=0)
-    ml_loss = np.average(attr_dict["losses"])
-    sigmas = np.exp(attr_dict["preds_cov"])
+    if "mse_mean" in attr_dict:
+        mse_loss = attr_dict["mse_mean"]
+        ml_loss = attr_dict["ml_loss_mean"]
+        sigmas = attr_dict["sigmas_sampled"]
+    else:
+        mse_loss = np.mean((attr_dict["targets"] - attr_dict["preds"]) ** 2, axis=0)
+        ml_loss = np.average(attr_dict["losses"])
+        sigmas = np.exp(attr_dict["preds_cov"])
+        
     # If it's sequential, take the last one
     if len(mse_loss.shape) == 2:
         assert mse_loss.shape[0] == 3
         mse_loss = mse_loss[:, -1]
+        
+    if len(sigmas.shape) == 3:
         assert sigmas.shape[1] == 3
         sigmas = sigmas[:,:,-1]
+        
     summary_writer.add_scalar(f"{mode}_loss/loss_x", mse_loss[0], epoch)
     summary_writer.add_scalar(f"{mode}_loss/loss_y", mse_loss[1], epoch)
     summary_writer.add_scalar(f"{mode}_loss/loss_z", mse_loss[2], epoch)
@@ -377,6 +454,7 @@ def net_train(args):
         sys.exit()
 
     best_val_loss = np.inf
+    memory_efficient = (args.arch == "resnet_seq")
     for epoch in range(start_epoch + 1, args.epochs):
         signal.signal(
             signal.SIGINT, partial(stop_signal_handler, args, epoch, network, optimizer)
@@ -388,13 +466,13 @@ def net_train(args):
 
         logging.info(f"-------------- Training, Epoch {epoch} ---------------")
         start_t = time.time()
-        train_attr_dict = do_train(network, train_loader, device, epoch, optimizer, train_transforms)
+        train_attr_dict = do_train(network, train_loader, device, epoch, optimizer, train_transforms, memory_efficient=memory_efficient)
         write_summary(summary_writer, train_attr_dict, epoch, optimizer, "train")
         end_t = time.time()
         logging.info(f"time usage: {end_t - start_t:.3f}s")
 
         if val_loader is not None:
-            val_attr_dict = get_inference(network, val_loader, device, epoch)
+            val_attr_dict = get_inference(network, val_loader, device, epoch, memory_efficient=memory_efficient)
             write_summary(summary_writer, val_attr_dict, epoch, optimizer, "val")
             if np.mean(val_attr_dict["losses"]) < best_val_loss:
                 best_val_loss = np.mean(val_attr_dict["losses"])
