@@ -9,7 +9,7 @@ from scipy.interpolate import interp1d
 from scipy.spatial.transform import Rotation
 from tracker.imu_calib import ImuCalib
 from tracker.imu_tracker import ImuTracker
-from utils.o3d_visualizer import O3dVisualizer
+
 from utils.dotdict import dotdict
 from utils.logging import logging
 
@@ -26,6 +26,7 @@ class ImuTrackerRunner:
         self.input.load_vio(dataset, args)
         self.visualizer = None
         if args.visualize:
+            from utils.o3d_visualizer import O3dVisualizer
             vio_ghost = np.concatenate([
                 self.input.vio_ts_us[:,None], self.input.vio_rq, self.input.vio_p
             ], axis=1)
