@@ -1,31 +1,62 @@
+<div style="background-color: #e6f3ff; padding: 15px; border-radius: 10px; border: 1px solid #b3d7ff; color: #003366; margin-bottom: 20px;">
+<strong>Fork Information:</strong> This is a fork of the original work, meant to reproduce the results presented in the paper.
+
+The fork offers the following improvements on the original repo:
+<ul>
+  <li>Compatibility with M series Mac chips</li>
+  <li>A Dockerfile to expand on compatibility and reproducibility</li>
+  <li>Independently (from the research team) generated weights and benchmarks from the original code</li>
+  <li>A memory efficient mode for the seq2seq ResNet model (allows training on systems with < 16GB VRAM)</li>
+</ul>
+</div>
+
+---
+
+<!-- Transition to original text -->
+
 _This code is a supplementary material to the paper "TLIO: Tight Learned Inertial Odometry". To use the code here requires the user to generate its own dataset and retrain. For more information about the paper and the video materials, please refer to our [website](https://cathias.github.io/TLIO/)._
 
-
 # Installation
+
 All dependencies can be installed using conda via
+
 ```shell script
 conda env create -f environment.yaml
 ```
+
 Then the virtual environment is accessible with:
+
 ```shell script
 conda activate tlio
 ```
 
 Next commands should be run from this environment.
 
+<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
+<strong>Comment 1:</strong> For improved compatibility, you can also use Docker. Download Docker <a href="https://www.docker.com/products/docker-desktop/">here</a> and then build the container using:
+<pre><code>docker build -t tlio .</code></pre>
+</div>
+Next commands should be run from within the Docker container. To start a session in the container use:
+```shell script
+docker run -it --gpus all -v $(pwd):/app tlio
+```
+
 # Dataset
-A dataset is needed in numpy format to run with this code. 
+
+A dataset is needed in numpy format to run with this code.
 We have released the dataset used in the paper.
 The data can be downloaded [here](https://drive.google.com/file/d/10Bc6R-s0ZLy9OEK_1mfpmtDg3jIu8X6g/view?usp=share_link) or with the following command (with the conda env activated) at the root of the repo:
+
 ```shell script
 gdown 14YKW7PsozjHo_EdxivKvumsQB7JMw1eg
 mkdir -p local_data/ # or ln -s /path/to/data_drive/ local_data/
 unzip golden-new-format-cc-by-nc-with-imus-v1.5.zip -d local_data/
 rm golden-new-format-cc-by-nc-with-imus-v1.5.zip
 ```
-https://drive.google.com/file/d/14YKW7PsozjHo_EdxivKvumsQB7JMw1eg/view?usp=share_link
+<https://drive.google.com/file/d/14YKW7PsozjHo_EdxivKvumsQB7JMw1eg/view?usp=share_link>
 The dataset tree structure looks like this.
 Assume for the examples we have extracted the data under root directory `local_data/tlio_golden`:
+
 ```
 local_data/tlio_golden
 ├── 1008221029329889
@@ -46,8 +77,8 @@ local_data/tlio_golden
 
 `imu0_resampled.npy` contains calibrated IMU data and processed VIO ground truth data.
 `imu0_resampled_description.json` describes what the different columns in the data are.
-The test sequences contain `imu_samples_0.csv` which is the raw IMU data for running the filter. 
-`calibration.json` contains the offline calibration. 
+The test sequences contain `imu_samples_0.csv` which is the raw IMU data for running the filter.
+`calibration.json` contains the offline calibration.
 Attitude filter data is not included with the release.
 
 # Network training and evaluation
@@ -58,14 +89,15 @@ There are three different modes for the network part.`--mode` parameter defines 
 `train`: training a network model with training and validation dataset. \
 `test`: running an existing network model on testing dataset to obtain concatenated trajectories and metrics. \
 
-### 1. Training:
+### 1. Training
 
-**Parameters:** 
+**Parameters:**
 
 `--root_dir`: dataset root directory. Each subfolder of root directory is a dataset. \
 `--out_dir`: training output directory, where `checkpoints` and `logs` folders will be created to store trained models and tensorboard logs respectively. A `parameters.json` file will also be saved.
 
-**Example:** 
+**Example:**
+
 ```shell script
 python3 src/main_net.py \
 --mode train \
@@ -75,29 +107,34 @@ python3 src/main_net.py \
 ```
 
 **Note:** We offer multiple types of dataloaders to help speed up training.
-The `--dataset_style` arg can be `ram`, `mmap`, or `iter`. 
-`ram` stores all the sequences in RAM, `mmap` uses memmapping to only keep part of the 
+The `--dataset_style` arg can be `ram`, `mmap`, or `iter`.
+`ram` stores all the sequences in RAM, `mmap` uses memmapping to only keep part of the
 sequences in RAM at once, and `iter` is an iterable-style dataloader for larger datasets,
-which sacrifices true randomness. 
-The default is `mmap`, which offers the best tradeoff, and typically works for 
+which sacrifices true randomness.
+The default is `mmap`, which offers the best tradeoff, and typically works for
 the dataset provided.
 However, we found that on server-style machines, the memmapping can cause RAM to fill up
 for some reason (it seems to work best on personal desktops).
 If the training is getting killed by your OS or taking up too much RAM,
 you may try setting `--workers` to 1, `--dataset_style` to `ram`, and/or `--no-persistent_workers`.
 
+<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
+<strong>Comment 2:</strong> We have added a memory efficient mode for the <code>resnet_seq</code> model. While the original code is optimal for reproducibility and transparency, it was frequently choking on GPU memory. This mode allows training on systems with limited VRAM (less than 16GB).
+</div>
+
 ```shell script
 tensorboard --logdir models/resnet/logs/
 ```
 
-### 2. Testing:
+### 2. Testing
 
-**Parameters:** 
+**Parameters:**
 
 `--model_path`: path of the trained model to test with. \
-`--out_dir`: testing output directory, where a folder for each dataset tested will be created containing estimated trajectory as `trajectory.txt` and plots if specified. `metrics.json` contains the statistics for each dataset. 
+`--out_dir`: testing output directory, where a folder for each dataset tested will be created containing estimated trajectory as `trajectory.txt` and plots if specified. `metrics.json` contains the statistics for each dataset.
 
 **Example:**
+
 ```shell script
 python3 src/main_net.py \
 --mode test \
@@ -106,8 +143,7 @@ python3 src/main_net.py \
 --out_dir test_outputs
 ```
 
-
-**Warning:** network testing use the ground truth orientations for displacement integration. 
+**Warning:** network testing use the ground truth orientations for displacement integration.
 Please do not consider them as benchmarks, they are more like a debugging tool.
 
 ## For batch testing on multiple models
@@ -115,6 +151,7 @@ Please do not consider them as benchmarks, they are more like a debugging tool.
 Batch scripts are under src/batch_analysis module. Execute batch scripts from the src folder.
 
 Batch testing tests a list of datasets using multiple models and for each model save the trajectories, plots and metrics into a separate model folder. Output tree structure looks like this:
+
 ```
 batch_test_outputs
 ├── model1
@@ -132,11 +169,14 @@ batch_test_outputs
 ```
 
 Create an output directory and go to the src folder
+
 ```shell script
 mkdir batch_test_outputs
 cd src
 ```
+
 Run batch tests. `--model_globbing` is the globbing pattern to find all models to test. Here we only have one.
+
 ```shell script
 python -m batch_runner.net_test_batch \
 --root_dir ../local_data/tlio_golden \
@@ -144,23 +184,26 @@ python -m batch_runner.net_test_batch \
 --out_dir ../batch_test_outputs \
 --save_plot
 ```
+
 If you saved plot, you can visualize there:
 
 ```shell script
-feh ../	batch_test_outputs/models-resnet/*/view.png # example using the `feh` image visualizer, use your favorite one
+feh ../ batch_test_outputs/models-resnet/*/view.png # example using the `feh` image visualizer, use your favorite one
 ```
-
 
 ## Running analysis and generating plots
 
 After running testing and evaluation in batches, the statistics are saved in either `metrics.json`. To visualize the results and compare between models, we provide scripts that display the results in an interactive shell through iPython. The scripts are under `src/analysis` module.
 
 To visualize network testing results from `metrics.json` including trajectory metrics and testing losses, go to `src` folder and run
+
 ```shell script
 python -m analysis.display_json \
 --glob_dataset "../batch_test_outputs/*/"
 ```
+
 This will leave you in an interactive shell with a preloaded panda DataFrame `d`. You can use it to visualize all metrics with the following helper function:
+
 ```shell script
 plot_all_stats_net(d)
 ```
@@ -168,21 +211,23 @@ plot_all_stats_net(d)
 # Running EKF with network displacement estimates
 
 ## Converting model to torchscript
+
 The EKF expects the model to be in torchscript format.
 
 **Example:**
 From the repo root:
+
 ```shell script
 python3 src/convert_model_to_torchscript.py \
 --model_path models/resnet/checkpoint_best.pt \
 --model_param_path models/resnet/parameters.json \
 --out_dir models/resnet/
 ```
+
 which will create `models/resnet/model_torchscript.pt`.
 
-
 ## Running EKF with one network model
- 
+
 Use `src/main_filter.py` for running the filter and parsing parameters. The program supports running multiple datasets on one specified network model.
 
 **Parameters:**
@@ -196,6 +241,7 @@ Use `src/main_filter.py` for running the filter and parsing parameters. The prog
 `--visualize`: if set, open up an Open3D window to visualize the filter running. This is of course optional.
 
 **Example:**
+
 ```shell script
 python3 src/main_filter.py \
 --root_dir local_data/tlio_golden \
@@ -208,13 +254,19 @@ python3 src/main_filter.py \
 --dataset_number 22 \
 --visualize
 ```
+
 Please refer to `main_filter.py` for a full list of parameters.
+
+<div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; border: 1px solid #b3d7ff; color: #003366; margin: 10px 0;">
+<strong>Comment 3:</strong> Note on 3D visualization: The Open3D library is currently incompatible with Mac memory management. We have modified the filter to work without visualization by default; however, the program will still crash if the <code>--visualize</code> parameter is set to true on macOS.
+</div>
 
 ## Batch running filter on multiple models and parameters
 
 Batch script `batch_runner/filter_batch` provides functionality to run the main file in batch settings. Go to `src` folder to run the module and you can set the parameters to test within the script (e.g. different update frequencies).
 
 **Example:**
+
 ```shell script
 cd src
 python -m batch_runner.filter_batch \
@@ -233,6 +285,7 @@ To generate plots of the states of the filter and to generate `metrics.json` fil
 `--no_make_plots`: not to save plots. If removed plots will be saved in the filter output folders for each trajectory.
 
 **Example:**
+
 ```shell script
 python -m batch_runner.plot_batch \
 --root_dir ../local_data/tlio_golden \
@@ -242,6 +295,7 @@ python -m batch_runner.plot_batch \
 ```
 
 Up to now a `metrics.json` file will be added to each model folder, and the tree structure would look like this:
+
 ```
 batch_filter_outputs
 ├── model1
@@ -261,11 +315,13 @@ batch_filter_outputs
 ```
 
 Visualize the plot from the filter and ronin:
+
 ```shell script
 feh ../batch_filter_outputs_uf20/models-resnet/*/position-2d.png # example using the `feh` image visualizer, use your favorite one
 ```
 
 To generate plots from the metrics:
+
 ```shell script
 python -m analysis.display_json \
 --glob_dataset "../batch_filter_outputs_uf20/*/"
