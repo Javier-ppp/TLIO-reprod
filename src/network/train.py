@@ -25,6 +25,7 @@ def torch_to_numpy(torch_arr):
     return torch_arr.cpu().detach().numpy()
 
 
+@torch.no_grad()
 def get_inference(network, data_loader, device, epoch, transforms=[], memory_efficient=False):
     """
     Obtain attributes from a data loader given a network state
