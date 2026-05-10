@@ -16,5 +16,6 @@ dependencies:
   - tqdm
   - h5py
   - setuptools=69.5.1
+  - nbconvert
   - pip:
     - -r requirements.txt

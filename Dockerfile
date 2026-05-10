@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libgomp1 \
     libomp-dev \
+    pandoc \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Miniconda (handles multiple architectures automatically)
