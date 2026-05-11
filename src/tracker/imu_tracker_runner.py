@@ -37,12 +37,13 @@ class ImuTrackerRunner:
         if os.path.exists(outdir) is False:
             os.mkdir(outdir)
         outfile = os.path.join(outdir, args.out_filename)
-        if os.path.exists(outfile):
+        final_outfile = outfile + ".npy" if args.save_as_npy else outfile
+        if os.path.exists(final_outfile):
             if not args.erase_old_log:
-                logging.warning(f"{outfile} already exists, skipping")
+                logging.warning(f"{final_outfile} already exists, skipping")
                 raise FileExistsError
             else:
-                os.remove(outfile)
+                os.remove(final_outfile)
                 logging.warning("previous log file erased")
 
         self.outfile = os.path.join(outdir, args.out_filename)
