@@ -1,91 +1,345 @@
-import time
-import torch
-import sys
+import json
 import os
+from os import path as osp
+import time
 
-# Add src to path so we can import modules
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+import torch
+from dataloader.memmapped_sequences_dataset import MemMappedSequencesDataset
+from ..model_factory import get_model
+from torch.utils.data import DataLoader
 
-from network.model_factory import get_model
+from utils.dotdict import dotdict
+from utils.utils import to_device
+from utils.logging import logging
+from utils.math_utils import *
 
-def get_device():
-    if torch.cuda.is_available():
-        return torch.device('cuda')
-    elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
-        return torch.device('mps')
-    else:
-        return torch.device('cpu')
 
-def sync(device):
-    if device.type == 'cuda':
-        torch.cuda.synchronize()
-    elif device.type == 'mps':
-        torch.mps.synchronize()
+def benchmark_sequence_generation(
+    network,
+    data_loader,
+    device,
+):
+    """
+    Benchmark ONLY inference timing.
 
-def benchmark_model(arch, seq_len, device, warmup_runs=10, benchmark_runs=100):
-    net_config = {"in_dim": seq_len // 32 + 1}
-    try:
-        model = get_model(arch, net_config).to(device)
-    except Exception as e:
-        print(f"Failed to load {arch} with seq_len {seq_len}: {e}")
-        return None
+    Returns:
+        total_sequence_time
+        avg_token_time
+        total_tokens
+    """
 
-    model.eval()
-    
-    # Batch size 1, 6 channels, sequence length
-    x = torch.randn(1, 6, seq_len).to(device)
+    network.eval()
 
-    try:
-        with torch.no_grad():
-            # Warmup
-            for _ in range(warmup_runs):
-                _ = model(x)
-            
-            sync(device)
-            
-            # Benchmark
+    total_time = 0.0
+    total_tokens = 0
+
+    with torch.no_grad():
+
+        for sample in data_loader:
+
+            sample = to_device(sample, device)
+
+            feat = sample["feats"]["imu0"]
+
+            # -----------------------------------
+            # Synchronize before timing
+            # -----------------------------------
+
+            if device.type == "cuda":
+                torch.cuda.synchronize()
+            elif device.type == "mps":
+                torch.mps.synchronize()
+
             start_time = time.perf_counter()
-            for _ in range(benchmark_runs):
-                _ = model(x)
-            sync(device)
-            end_time = time.perf_counter()
-    except Exception as e:
-        # Some models (like resnet_seq) crash on specific sequence lengths 
-        # due to down/upsampling dimension mismatches.
-        return {"arch": arch, "seq_len": seq_len, "error": str(e)}
 
-    total_time = end_time - start_time
-    avg_seq_time = total_time / benchmark_runs
-    avg_token_time = avg_seq_time / seq_len
+            pred, pred_cov = network(feat)
+
+            # -----------------------------------
+            # Synchronize after timing
+            # -----------------------------------
+
+            if device.type == "cuda":
+                torch.cuda.synchronize()
+            elif device.type == "mps":
+                torch.mps.synchronize()
+
+            elapsed = time.perf_counter() - start_time
+
+            total_time += elapsed
+
+            # -----------------------------------
+            # Token counting
+            # -----------------------------------
+
+            # Seq2seq output:
+            # [B, C, T]
+            if len(pred.shape) == 3:
+                batch_tokens = pred.shape[0] * pred.shape[2]
+
+            # Standard output:
+            # [B, C]
+            elif len(pred.shape) == 2:
+                batch_tokens = pred.shape[0]
+
+            else:
+                raise ValueError(
+                    f"Unexpected prediction shape: {pred.shape}"
+                )
+
+            total_tokens += batch_tokens
+
+    avg_token_time = total_time / total_tokens
 
     return {
-        "arch": arch,
-        "seq_len": seq_len,
-        "avg_seq_time_ms": avg_seq_time * 1000.0,
-        "avg_token_time_ms": avg_token_time * 1000.0
+        "total_sequence_generation_time_s": float(total_time),
+        "average_token_generation_time_s": float(avg_token_time),
+        "total_tokens_generated": int(total_tokens),
+    }
+def arg_conversion(args):
+    """ Conversions from time arguments to data size """
+
+    if not (args.past_time * args.imu_freq).is_integer():
+        raise ValueError(
+            "past_time cannot be represented by integer number of IMU data."
+        )
+    if not (args.window_time * args.imu_freq).is_integer():
+        raise ValueError(
+            "window_time cannot be represented by integer number of IMU data."
+        )
+    if not (args.future_time * args.imu_freq).is_integer():
+        raise ValueError(
+            "future_time cannot be represented by integer number of IMU data."
+        )
+    if not (args.imu_freq / args.sample_freq).is_integer():
+        raise ValueError("sample_freq must be divisible by imu_freq.")
+
+    data_window_config = dotdict()
+    data_window_config.past_data_size = int(args.past_time * args.imu_freq)
+    data_window_config.window_size = int(args.window_time * args.imu_freq)
+    data_window_config.future_data_size = int(args.future_time * args.imu_freq)
+    data_window_config.step_size = int(args.imu_freq / args.sample_freq)
+    data_window_config.data_style = "resampled"
+    data_window_config.input_sensors = ["imu0"]
+    data_window_config.decimator = 10
+    data_window_config.express_in_t0_yaw_normalized_frame = False
+
+    net_config = {
+        "in_dim": (
+            data_window_config["past_data_size"]
+            + data_window_config["window_size"]
+            + data_window_config["future_data_size"]
+        )
+        // 32
+        + 1
     }
 
-def main():
-    device = get_device()
-    print(f"Benchmarking on device: {device}\n")
+    # Display
+    np.set_printoptions(formatter={"all": "{:.6f}".format})
+    logging.info(f"Training/testing with {args.imu_freq} Hz IMU data")
+    logging.info(
+        "Size: "
+        + str(data_window_config["past_data_size"])
+        + "+"
+        + str(data_window_config["window_size"])
+        + "+"
+        + str(data_window_config["future_data_size"])
+        + ", "
+        + "Time: "
+        + str(args.past_time)
+        + "+"
+        + str(args.window_time)
+        + "+"
+        + str(args.future_time)
+    )
+    logging.info("Perturb on bias: %s" % args.do_bias_shift)
+    logging.info("Perturb on gravity: %s" % args.perturb_gravity)
+    logging.info("Sample frequency: %s" % args.sample_freq)
+    return data_window_config, net_config
 
-    architectures = ['resnet', 'resnet_seq', 'tcn']
-    # 200 is default (1 sec @ 200Hz). 
-    # Use powers of 2 for others to avoid resnet_seq dimension issues
-    seq_lengths = [200, 512, 1024] 
+def get_datalist(list_path):
+    with open(list_path) as f:
+        data_list = [s.strip() for s in f.readlines() if len(s.strip()) > 0]
+    return data_list
 
-    print(f"{'Architecture':<15} | {'Seq Len':<10} | {'Seq Time (ms)':<15} | {'Token Time (ms)':<15}")
-    print("-" * 65)
+def net_test(args):
+    """
+    Benchmark ONLY inference timing.
+    No plots.
+    No trajectory metrics.
+    No loss metrics.
+    """
 
-    for arch in architectures:
-        for seq_len in seq_lengths:
-            res = benchmark_model(arch, seq_len, device)
-            if res is not None:
-                if "error" in res:
-                    print(f"{res['arch']:<15} | {res['seq_len']:<10} | {'ERROR':<15} | {res['error']}")
-                else:
-                    print(f"{res['arch']:<15} | {res['seq_len']:<10} | {res['avg_seq_time_ms']:<15.3f} | {res['avg_token_time_ms']:<15.4f}")
-        print("-" * 65)
+    try:
+
+        if args.root_dir is None:
+            raise ValueError("root_dir must be specified.")
+
+        if args.out_dir is not None:
+
+            if not osp.isdir(args.out_dir):
+                os.makedirs(args.out_dir)
+
+            logging.info(f"Benchmark output writes to {args.out_dir}")
+
+        else:
+            raise ValueError("out_dir must be specified.")
+
+        data_window_config, net_config = arg_conversion(args)
+
+    except ValueError as e:
+        logging.error(e)
+        return
+
+    test_list_path = osp.join(args.root_dir, "test_list.txt")
+    test_list = get_datalist(test_list_path)
+
+    # ---------------------------------------------------------
+    # Device selection
+    # ---------------------------------------------------------
+
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+
+    else:
+        device = torch.device("cpu")
+
+    logging.info(f"Using device: {device}")
+
+    # ---------------------------------------------------------
+    # Load model
+    # ---------------------------------------------------------
+
+    checkpoint = torch.load(
+        args.model_path,
+        map_location=device,
+    )
+
+    network = get_model(
+        args.arch,
+        net_config,
+        args.input_dim,
+        args.output_dim,
+    ).to(device)
+
+    network.load_state_dict(
+        checkpoint["model_state_dict"]
+    )
+
+    network.eval()
+
+    logging.info(
+        f"Model {args.model_path} loaded to device {device}."
+    )
+
+    # ---------------------------------------------------------
+    # Benchmark results container
+    # ---------------------------------------------------------
+
+    all_metrics = {}
+
+    # ---------------------------------------------------------
+    # Iterate sequences
+    # ---------------------------------------------------------
+
+    for data in test_list:
+
+        logging.info(f"Benchmarking {data}...")
+
+        try:
+
+            seq_dataset = MemMappedSequencesDataset(
+                args.root_dir,
+                "test",
+                data_window_config,
+                sequence_subset=[data],
+                store_in_ram=True,
+            )
+
+            seq_loader = DataLoader(
+                seq_dataset,
+                batch_size=1024,
+                shuffle=False,
+            )
+
+        except OSError as e:
+            print(e)
+            continue
+
+        # -----------------------------------------------------
+        # Benchmark timing only
+        # -----------------------------------------------------
+
+        metrics = benchmark_sequence_generation(
+            network,
+            seq_loader,
+            device,
+        )
+
+        logging.info(metrics)
+
+        all_metrics[data] = metrics
+
+    # ---------------------------------------------------------
+    # Save JSON
+    # ---------------------------------------------------------
+
+    try:
+
+        outfile = osp.join(
+            args.out_dir,
+            "benchmark_metrics.json",
+        )
+
+        with open(outfile, "w") as f:
+            json.dump(all_metrics, f, indent=1)
+
+        logging.info(f"Saved benchmark to {outfile}")
+
+    except Exception as e:
+        logging.error(e)
+
+    return
+
+import argparse
+
 
 if __name__ == "__main__":
-    main()
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--mode", type=str, default="test")
+
+    parser.add_argument("--root_dir", type=str, required=True)
+
+    parser.add_argument("--arch", type=str, required=True)
+
+    parser.add_argument("--model_path", type=str, required=True)
+
+    parser.add_argument("--out_dir", type=str, required=True)
+
+    parser.add_argument("--imu_freq", type=float, default=200.0)
+
+    parser.add_argument("--past_time", type=float, default=0.0)
+
+    parser.add_argument("--window_time", type=float, default=1.0)
+
+    parser.add_argument("--future_time", type=float, default=0.0)
+
+    parser.add_argument("--sample_freq", type=float, default=20.0)
+
+    parser.add_argument("--input_dim", type=int, default=6)
+
+    parser.add_argument("--output_dim", type=int, default=3)
+
+    parser.add_argument("--rpe_window", type=float, default=2.0)
+
+    parser.add_argument("--do_bias_shift", action="store_true")
+
+    parser.add_argument("--perturb_gravity", action="store_true")
+
+    args = parser.parse_args()
+
+    net_test(args)

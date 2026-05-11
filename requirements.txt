@@ -7,3 +7,4 @@ git+https://github.com/utiasSTARS/liegroups@master
 gdown
 open3d==0.17.0
 nbconvert
+tabulate
