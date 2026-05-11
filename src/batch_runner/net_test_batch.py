@@ -4,6 +4,7 @@ import os
 import os.path as osp
 import subprocess as sp
 from pathlib import Path
+import sys
 
 from utils.logging import logging
 
@@ -63,7 +64,7 @@ if __name__ == "__main__":
             sample_freq = 1.0 / conf["window_time"]  # concatenate
 
         command = [
-            "python3",
+            sys.executable,
             "main_net.py",
             "--mode",
             "test",

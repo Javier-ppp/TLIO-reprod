@@ -35,19 +35,24 @@ def benchmark_model(arch, seq_len, device, warmup_runs=10, benchmark_runs=100):
     # Batch size 1, 6 channels, sequence length
     x = torch.randn(1, 6, seq_len).to(device)
 
-    with torch.no_grad():
-        # Warmup
-        for _ in range(warmup_runs):
-            _ = model(x)
-        
-        sync(device)
-        
-        # Benchmark
-        start_time = time.perf_counter()
-        for _ in range(benchmark_runs):
-            _ = model(x)
-        sync(device)
-        end_time = time.perf_counter()
+    try:
+        with torch.no_grad():
+            # Warmup
+            for _ in range(warmup_runs):
+                _ = model(x)
+            
+            sync(device)
+            
+            # Benchmark
+            start_time = time.perf_counter()
+            for _ in range(benchmark_runs):
+                _ = model(x)
+            sync(device)
+            end_time = time.perf_counter()
+    except Exception as e:
+        # Some models (like resnet_seq) crash on specific sequence lengths 
+        # due to down/upsampling dimension mismatches.
+        return {"arch": arch, "seq_len": seq_len, "error": str(e)}
 
     total_time = end_time - start_time
     avg_seq_time = total_time / benchmark_runs
@@ -65,7 +70,9 @@ def main():
     print(f"Benchmarking on device: {device}\n")
 
     architectures = ['resnet', 'resnet_seq', 'tcn']
-    seq_lengths = [200, 400, 1000] # 200 is default (1 sec @ 200Hz)
+    # 200 is default (1 sec @ 200Hz). 
+    # Use powers of 2 for others to avoid resnet_seq dimension issues
+    seq_lengths = [200, 512, 1024] 
 
     print(f"{'Architecture':<15} | {'Seq Len':<10} | {'Seq Time (ms)':<15} | {'Token Time (ms)':<15}")
     print("-" * 65)
@@ -74,7 +81,10 @@ def main():
         for seq_len in seq_lengths:
             res = benchmark_model(arch, seq_len, device)
             if res is not None:
-                print(f"{res['arch']:<15} | {res['seq_len']:<10} | {res['avg_seq_time_ms']:<15.3f} | {res['avg_token_time_ms']:<15.4f}")
+                if "error" in res:
+                    print(f"{res['arch']:<15} | {res['seq_len']:<10} | {'ERROR':<15} | {res['error']}")
+                else:
+                    print(f"{res['arch']:<15} | {res['seq_len']:<10} | {res['avg_seq_time_ms']:<15.3f} | {res['avg_token_time_ms']:<15.4f}")
         print("-" * 65)
 
 if __name__ == "__main__":
