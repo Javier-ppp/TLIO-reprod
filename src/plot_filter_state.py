@@ -533,9 +533,15 @@ def run(args, dataset):
     metric_map["filter"]["angular_drift_deg_hour"] = (
         angular_drift_filter / ts.max() * 3600
     )
+    metric_map["filter"]["sequence_duration_s"] = ts[-1] - ts[0]
+    metric_map["filter"]["num_updates"] = np.sum(~np.isnan(innos[:, 0]))
+    metric_map["filter"]["per_update_time_ms"] = (ts[-1] - ts[0]) / metric_map["filter"]["num_updates"] * 1000
     logging.info(f"drift of filter {metric_map['filter']['drift_ratio']}")
     logging.info(f"ATE of filter {metric_map['filter']['ate']}")
     logging.info(f"Mean Heading error of filter {metric_map['filter']['mhe']}")
+    logging.info(f"Sequence duration: {metric_map['filter']['sequence_duration_s']} s")
+    logging.info(f"Number of updates: {metric_map['filter']['num_updates']}")
+    logging.info(f"Per update time: {metric_map['filter']['per_update_time_ms']} ms")
 
     def compute_rpe_filter(ns_rpe):
         rpe_rmse, rpe_rmse_z, relative_yaw_rmse = compute_rpe(
@@ -574,9 +580,15 @@ def run(args, dataset):
         metric_map["ronin"]["angular_drift_deg_hour"] = (
             angular_drift_ronin / ts.max() * 3600
         )
+        metric_map["ronin"]["sequence_duration_s"] = ronin_ts[-1] - ronin_ts[0]
+        metric_map["ronin"]["num_updates"] = len(ronin_ts)
+        metric_map["ronin"]["per_update_time_ms"] = (ronin_ts[-1] - ronin_ts[0]) / len(ronin_ts) * 1000
         logging.info(f"drift of ronin {metric_map['ronin']['drift_ratio']}")
         logging.info(f"ATE of ronin {metric_map['ronin']['ate']}")
         logging.info(f"Mean Heading error of ronin {metric_map['ronin']['mhe']}")
+        logging.info(f"RoNIN sequence duration: {metric_map['ronin']['sequence_duration_s']} s")
+        logging.info(f"RoNIN number of updates: {metric_map['ronin']['num_updates']}")
+        logging.info(f"RoNIN per update time: {metric_map['ronin']['per_update_time_ms']} ms")
 
         def compute_rpe_ronin(ns_rpe):
             rpe_rmse, rpe_rmse_z, relative_yaw_rmse = compute_rpe(

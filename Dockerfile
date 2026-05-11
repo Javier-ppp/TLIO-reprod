@@ -3,8 +3,8 @@
 FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04
 
 # Set environment variables for NVIDIA and Conda
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 ENV PATH="/opt/conda/bin:${PATH}"
 ARG PATH="/opt/conda/bin:${PATH}"
 ENV DEBIAN_FRONTEND=noninteractive
@@ -35,7 +35,9 @@ COPY requirements.txt .
 
 # Create the Conda environment
 # If no NVIDIA hardware is present, PyTorch will automatically default to CPU.
-RUN conda env create -f environment.yaml && \
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    conda env create -f environment.yaml && \
     # Ensure pytorch-cuda is installed on x86_64 systems for GPU support
     if [ "$(uname -m)" = "x86_64" ]; then \
         conda install -n tlio -y pytorch-cuda=12.1 -c pytorch -c nvidia; \
