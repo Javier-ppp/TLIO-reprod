@@ -7441,7 +7441,8 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="TLIO:-Tight-Learned-Inertial-Odometry">TLIO: Tight Learned Inertial Odometry<a class="anchor-link" href="#TLIO:-Tight-Learned-Inertial-Odometry">¶</a></h1><ul>
+<h1 id="TLIO:-Tight-Learned-Inertial-Odometry">TLIO: Tight Learned Inertial Odometry<a class="anchor-link" href="#TLIO:-Tight-Learned-Inertial-Odometry">¶</a></h1><br/>
+<ul>
 <li>Paper: <code>arXiv:2007.01867v3</code> / IEEE Robotics and Automation Letters, 2020</li>
 <li>Authors: Wenxin Liu, David Caruso, Eddy Ilg, Jing Dong, Anastasios I. Mourikis, Kostas Daniilidis, Vijay Kumar, Jakob Engel</li>
 <li>Presentation Author: Javier Penuela</li>
@@ -7456,7 +7457,8 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Introduction-to-Pedestrian-Dead-Reckoning">Introduction to Pedestrian Dead Reckoning<a class="anchor-link" href="#Introduction-to-Pedestrian-Dead-Reckoning">¶</a></h2><ul>
+<h2 id="Introduction-to-Pedestrian-Dead-Reckoning">Introduction to Pedestrian Dead Reckoning<a class="anchor-link" href="#Introduction-to-Pedestrian-Dead-Reckoning">¶</a></h2><br/>
+<ul>
 <li>Pedestrian dead reckoning (PDR) estimates motion from inertial sensors alone.</li>
 <li>Traditional methods rely on step detection, stride models, and heading estimation.</li>
 <li>Challenges: sensor bias, noise, drift, arbitrary device orientation, and diverse human motion.</li>
@@ -7465,14 +7467,15 @@ main {
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=203458d4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Dataset:-Collection">Dataset: Collection<a class="anchor-link" href="#Dataset:-Collection">¶</a></h2><ul>
+<h2 id="Dataset:-Collection">Dataset: Collection<a class="anchor-link" href="#Dataset:-Collection">¶</a></h2><br/>
+<ul>
 <li>Collected with a custom rig: Bosch BMI055 IMU mounted on a headset rigidly attached to cameras.</li>
 <li>More than 400 sequences, totaling 60 hours of pedestrian data.</li>
 <li>Activities include walking, standing, kitchen tasks, playing pool, stairs, outdoor uneven terrain, and more.</li>
@@ -7482,14 +7485,15 @@ main {
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=16f84c02">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Dataset:-Description">Dataset: Description<a class="anchor-link" href="#Dataset:-Description">¶</a></h2><ul>
+<h2 id="Dataset:-Description">Dataset: Description<a class="anchor-link" href="#Dataset:-Description">¶</a></h2><br/>
+<ul>
 <li>Ground truth from a state-of-the-art visual-inertial filter at 1000 Hz.</li>
 <li>Dataset split randomly into 80% training, 10% validation, 10% test. No difference between validation and test datasets is disclosed</li>
 <li>The dataset contains pedestrian trajectories with 3 to 7 minutes of activity per sequence.</li>
@@ -7498,14 +7502,15 @@ main {
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=766aeec2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Dataset:-Preprocessing">Dataset: Preprocessing<a class="anchor-link" href="#Dataset:-Preprocessing">¶</a></h2><ul>
+<h2 id="Dataset:-Preprocessing">Dataset: Preprocessing<a class="anchor-link" href="#Dataset:-Preprocessing">¶</a></h2><br/>
+<ul>
 <li><p>Training uses overlapping sliding windows of IMU data.</p>
 </li>
 <li><p>Each window contains N IMU samples; final choice is <code>N = 200</code> for 200 Hz data.</p>
@@ -7523,36 +7528,52 @@ main {
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fe0d9ec3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Dataset:-Gravity-Aligned-Frame">Dataset: Gravity-Aligned Frame<a class="anchor-link" href="#Dataset:-Gravity-Aligned-Frame">¶</a></h2><ul>
+<h2 id="Dataset:-Gravity-Aligned-Frame">Dataset: Gravity-Aligned Frame<a class="anchor-link" href="#Dataset:-Gravity-Aligned-Frame">¶</a></h2><br/>
+<ul>
 <li>IMU samples are rotated to a local gravity-aligned frame built from the orientation at the beginning of each window.</li>
 <li>Gravity-aligned frame ensures gravity points downward and decouples global yaw from local displacement.</li>
 <li>The network input is therefore invariant to arbitrary heading of the headset.</li>
 </ul>
 <p>Method:</p>
 <p>Compute a reference array <code>ig_w: np.array([0, 0, 1.0])</code> representing gravity pointing "up" in the Z-axis of the world frame.
-then they compute the rotation matrix $R$ such that $R a = b$:
-- Normalization: It normalizes both the input vector $a$ (the accelerometer reading) and the target vector $b$ (the gravity vector).
-- Rotation Axis ($\omega$): It finds the axis of rotation by taking the cross product of the two vectors: $$\omega = \hat{a} \times \hat{b}$$ This vector $\omega$ is perpendicular to the plane formed by $a$ and $b$.
-- Rodrigues' Rotation Formula: $$R = I + [\omega]\times + \frac{1}{1 + \hat{a} \cdot \hat{b}} ([\omega]_\times)^2$$
-$[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v) helper function -&gt; <code>np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])</code>.</p>
+then they compute the rotation matrix $R$ such that $R a = b$:</p>
+<ul>
+<li>Normalization: It normalizes both the input vector $a$ (the accelerometer reading) and the target vector $b$ (the gravity vector).</li>
+<li>Rotation Axis ($\omega$): It finds the axis of rotation by taking the cross product of the two vectors: $$\omega = \hat{a} \times \hat{b}$$ This vector $\omega$ is perpendicular to the plane formed by $a$ and $b$.</li>
+</ul>
 </div>
 </div>
 </div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=42174f08">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li>Rodrigues' Rotation Formula: $$R = I + [\omega]_\times + \frac{1}{1 + \hat{a} \cdot \hat{b}} ([\omega]_\times)^2$$
+$[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v) helper function -&gt; <code>np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e1c6b76">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="System-Design-Overview">System Design Overview<a class="anchor-link" href="#System-Design-Overview">¶</a></h2><ul>
+<h2 id="System-Design-Overview">System Design Overview<a class="anchor-link" href="#System-Design-Overview">¶</a></h2><br/>
+<ul>
 <li><p>Two main components:</p>
 <ol>
 <li>Neural network: regresses 3D displacement and uncertainty from IMU segments.</li>
@@ -7567,7 +7588,7 @@ $[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v)
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=72671724">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7579,7 +7600,7 @@ $[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v)
 </li>
 <li><p>Input: <code>N x 6</code> IMU window, where each sample contains accelerometer and gyroscope measurements in gravity-aligned frame.</p>
 </li>
-<li><p>Output:</p>
+<li><p>Output (one independent FC block (3 layers) per output):</p>
 <ul>
 <li>$\hat d \in \mathbb{R}^3$: predicted 3D displacement over the window</li>
 <li>$\hat u \in \mathbb{R}^3$: uncertainty parameters for the displacement covariance</li>
@@ -7591,14 +7612,15 @@ $[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v)
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d30aa3a6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Loss-Functions">Loss Functions<a class="anchor-link" href="#Loss-Functions">¶</a></h2><ul>
+<h2 id="Loss-Functions">Loss Functions<a class="anchor-link" href="#Loss-Functions">¶</a></h2><br/>
+<ul>
 <li>Mean Squared Error (MSE) loss:</li>
 </ul>
 <p>$$
@@ -7622,69 +7644,61 @@ $$</p>
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5ccd3094">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Stochastic-Cloning">Stochastic Cloning<a class="anchor-link" href="#Stochastic-Cloning">¶</a></h2><ul>
-<li>The EKF state includes the current state and a sliding window of past cloned poses.</li>
-<li>A cloned pose is appended whenever a new network measurement is available.</li>
-<li>This allows the filter to use relative displacement measurements between pairs of past states.</li>
+<h2 id="Stochastic-Cloning">Stochastic Cloning<a class="anchor-link" href="#Stochastic-Cloning">¶</a></h2><br/>
+<ul>
+<li><p>The EKF state includes the current state and a sliding window of past cloned poses.</p>
+</li>
+<li><p>A cloned pose is appended whenever a new network measurement is available.</p>
+</li>
+<li><p>This allows the filter to use relative displacement measurements between pairs of past states. (i.e. to interpolate <code>m</code> piece-wise linear aproximations of the non-linear function between samples <code>n+k</code> to <code>n+k+1</code> )</p>
+</li>
+<li><p>Full state:</p>
+</li>
 </ul>
-<h3 id="State-Definition">State Definition<a class="anchor-link" href="#State-Definition">¶</a></h3><p>The full state $\mathbf{X}$ at any instant is defined as:</p>
 <p>$$
 \mathbf{X} = (\xi_1, \dots, \xi_m, \mathbf{s})
 $$</p>
-<p>where $\mathbf{s} = ({}^w\mathbf{p}_k, {}^w\mathbf{v}_k, {}^w\mathbf{q}_k, \mathbf{b}_{gk}, \mathbf{b}_{ak})$ is the current IMU state, and $\xi_i$ are the cloned elements:</p>
+<p>where $\xi_i = ({}^w_i\mathbf{R}_i, {}^w\mathbf{p}_i)$  represents past orientations and positions, and $\mathbf{s}=({}^w_i\mathbf{R}_i, {}^w\mathbf{v}, {}^w\mathbf{p}, \mathbf{b}_g), \mathbf{b}_a$ current position and orientation with dimensions:</p>
 <p>$$
-\xi_i = ({}^w\mathbf{p}_i, {}^w\mathbf{q}_i)^T
+\text{dim}(X) = 6m + 15
 $$</p>
+<p>where <code>m</code> is the number of past cloned states.</p>
 <ul>
-<li>Full state dimension: $\text{dim}(X) = 6m + 15$ (using minimal representation for rotation).</li>
 <li>Example: with 20 Hz updates and a 1 s window, up to 21 states are maintained.</li>
 </ul>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=error_filtering_slide">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=475ae072">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Error-based-Filtering-Method">Error-based Filtering Method<a class="anchor-link" href="#Error-based-Filtering-Method">¶</a></h2><p>The system employs an <strong>Error-State EKF (ES-EKF)</strong>, which linearizes the system locally on the manifold of the minimal parametrization of the rotation.</p>
-<h3 id="Error-State-Definition">Error State Definition<a class="anchor-link" href="#Error-State-Definition">¶</a></h3><p>The rotation error $\tilde{\theta}$ is defined using the $SO(3)$ logarithm:</p>
-<p>$$
-\tilde{\theta} = \log_{SO3}(\mathbf{R} \hat{\mathbf{R}}^{-1}) \in \mathfrak{so}(3)
-$$</p>
-<p>The full error state $\tilde{\mathbf{X}}$ is:</p>
-<p>$$
-\tilde{\mathbf{X}} = (\tilde{\xi}_1, \dots, \tilde{\xi}_m, \tilde{\mathbf{s}})^T
-$$</p>
-<h3 id="Linearized-Measurement-and-Update">Linearized Measurement and Update<a class="anchor-link" href="#Linearized-Measurement-and-Update">¶</a></h3><p>The measurement function $h(\mathbf{X})$ is linearized with respect to the error state:</p>
-<p>$$
-\tilde{\mathbf{z}} \approx \mathbf{H} \tilde{\mathbf{X}} + \mathbf{n}
-$$</p>
-<p>The state is updated by mapping the error-state correction back to the manifold:</p>
-<p>$$
-\mathbf{X} \leftarrow \mathbf{X} \oplus (\mathbf{K} (h(\mathbf{X}) - \hat{\mathbf{d}}_{ij}))
-$$</p>
-<p>where $\oplus$ handles the non-linear update of the rotation (using the exponential map) and standard addition for vector states.</p>
+<p>For the error propagation we apply the error-based filltering method:</p>
+<p>Cloned state error: $$\tilde{\xi}_i = (\tilde{\theta}_i, \tilde{\mathbf{p}}_i)$$</p>
+<p>Current state error: $$\tilde{\mathbf{s}} = (\tilde{\theta}, \tilde{\mathbf{v}}, \tilde{\mathbf{p}}, \tilde{\mathbf{b}}_g, \tilde{\mathbf{b}}_a)$$</p>
+<p>where the rotation error on the $SO(3)$: $\tilde{\theta} = \log_{SO3}(\mathbf{R} \hat{\mathbf{R}}^{-1})$.</p>
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9512444e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="EKF-Architecture-and-Equations">EKF Architecture and Equations<a class="anchor-link" href="#EKF-Architecture-and-Equations">¶</a></h2><h3 id="Propagation-model">Propagation model<a class="anchor-link" href="#Propagation-model">¶</a></h3><p>Strapdown inertial kinematics with IMU bias and gravity:</p>
+<h2 id="EKF-Architecture-and-Equations">EKF Architecture and Equations<a class="anchor-link" href="#EKF-Architecture-and-Equations">¶</a></h2><br/>
+<h3 id="Propagation-model">Propagation model<a class="anchor-link" href="#Propagation-model">¶</a></h3><p>Strapdown inertial kinematics with IMU bias and gravity:</p>
 <p>$$
 R_{k+1} = R_k \exp_{\mathrm{SO(3)}}\left((\omega_k - b_{g,k}) \Delta t\right)
 $$
@@ -7697,18 +7711,69 @@ $$
 $$
 b_{g,k+1} = b_{g,k} + n_{g,k}, \qquad b_{a,k+1} = b_{a,k} + n_{a,k}
 $$</p>
-<h3 id="Linearized-propagation">Linearized propagation<a class="anchor-link" href="#Linearized-propagation">¶</a></h3><p>$$
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=174bfbc7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Linearized-propagation">Linearized propagation<a class="anchor-link" href="#Linearized-propagation">¶</a></h3><br/>
+<p>$$
 \tilde s_{k+1} = A_k \tilde s_k + B_k n_k
-$$
-$$
+$$</p>
+<p>Standard Propagation:</p>
+<p>$$
 P_{k+1} = A_k P_k A_k^T + B_k W B_k^T
 $$</p>
-<h3 id="Measurement-model-in-gravity-aligned-frame">Measurement model in gravity-aligned frame<a class="anchor-link" href="#Measurement-model-in-gravity-aligned-frame">¶</a></h3><p>The network predicts a local displacement measurement:</p>
 <p>$$
-h(X) = R_i^T (p_j^w - p_i^w) = \hat d_{ij} + d_{ij}
+A_k = \begin{bmatrix} I_{6m} &amp; 0 \\
+ 0 &amp; A_{s,k} \end{bmatrix}, \quad B_k = \begin{bmatrix} 0 \\
+  B_{s,k} \end{bmatrix}
+  $$</p>
+<p>Propagation with Stochastic Cloning:</p>
+<p>$$
+\bar{P}_{k+1} = \bar{A}_k P_k \bar{A}k^T + \bar{B}k \bar{W} \bar{B}k^T
+$$
+$$
+\bar{A}k = \begin{bmatrix} I_{6m} &amp; 0 \\ 0 &amp; A_{\xi,k} \\ 0 &amp; A_{s,k} \end{bmatrix}, \quad \bar{B}k = \begin{bmatrix} 0 \\ B_{\xi,k} \\ B_{s,k} \end{bmatrix}
 $$</p>
-<p>with measurement covariance <code>\hat \Sigma_{ij}</code> from the network.</p>
-<h3 id="Kalman-update">Kalman update<a class="anchor-link" href="#Kalman-update">¶</a></h3><p>$$
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dc20cda6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Measurement-model-in-gravity-aligned-frame">Measurement model in gravity-aligned frame<a class="anchor-link" href="#Measurement-model-in-gravity-aligned-frame">¶</a></h3><br/>
+<p>The network predicts a local displacement measurement:</p>
+<p>$$
+h(X) = R_\gamma^T (p_j^w - p_i^w) = \hat d_{ij} + \eta_{d_{ij}}
+$$</p>
+<p>where $\eta_{d_{ij}}$ is normally distributed noise, with a zero mean and variance $\hat \Sigma_{ij}$ from the network.</p>
+<p>$$\mathbf{H}_{\tilde{\theta}_i} = \frac{\partial h(\mathbf{X})}{\partial \tilde{\theta}_i} = \lfloor \hat{\mathbf{R}}_\gamma^T [{}^w\hat{\mathbf{p}}_j - {}^w\hat{\mathbf{p}}i]_\times \mathbf{H}_z$$</p>
+<p>$$\mathbf{H}_{\tilde{\mathbf{\delta p}}_i} = \frac{\partial h(\mathbf{X})}{\partial \delta \tilde{\mathbf{p}}_i} = -\hat{\mathbf{R}}_\gamma^T$$</p>
+<p>$$\mathbf{H}_{\tilde{\mathbf{\delta p}}_j} = \frac{\partial h(\mathbf{X})}{\partial \delta \tilde{\mathbf{p}}_j} = \hat{\mathbf{R}}_\gamma^T$$</p>
+<p>where
+$$\mathbf{H}_z = \begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ \cos \gamma \tan \beta &amp; \sin \gamma \tan \beta &amp; 1 \end{bmatrix}$$</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=512cf9e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Kalman-update">Kalman update<a class="anchor-link" href="#Kalman-update">¶</a></h3><br/>
+<p>$$
 K = P H^T (H P H^T + \hat \Sigma_{ij})^{-1}
 $$
 $$
@@ -7719,62 +7784,91 @@ P \leftarrow (I - K H) P (I - K H)^T + K \hat \Sigma_{ij} K^T
 $$</p>
 <ul>
 <li>Measurement Jacobian <code>H</code> has nonzero blocks only for the cloned poses <code>i</code> and <code>j</code>.</li>
-<li>A <code>\chi^2</code> gating test rejects updates with normalized innovation beyond the 99%-tile for 3 DOF.</li>
+<li>A $\chi^2$ gating test rejects updates with normalized innovation beyond the 99%-tile for 3 DOF.</li>
 </ul>
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f29fc351">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Experimental-Results">Experimental Results<a class="anchor-link" href="#Experimental-Results">¶</a></h2><ul>
-<li>Evaluation on the held-out test split of the pedestrian dataset.</li>
-<li>Comparison against a state-of-the-art VIO ground truth and the 3D-RoNIN benchmark.</li>
-<li>Results show that combining learned displacement priors with an EKF yields lower drift and better pose estimates than a disconnected concatenation approach.</li>
-</ul>
+<h2 id="Experimental-Results">Experimental Results<a class="anchor-link" href="#Experimental-Results">¶</a></h2><br/>
+- Evaluation on the held-out test split of the pedestrian dataset.
+- Comparison against  VIO ground truth and the 3D-RoNIN benchmark.
+
+
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4580a87d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="RoNIN-Benchmark">RoNIN Benchmark<a class="anchor-link" href="#RoNIN-Benchmark">¶</a></h2><ul>
-<li>RoNIN is the benchmark for robust neural inertial navigation in the wild.</li>
-<li>In this work, 3D-RoNIN refers to a method that takes the same network outputs and concatenates displacements using an AHRS attitude filter.</li>
-<li>3D-RoNIN is used as the baseline to assess whether the tightly-coupled EKF improves performance.</li>
-</ul>
+<h2 id="RoNIN-Benchmark">RoNIN Benchmark<a class="anchor-link" href="#RoNIN-Benchmark">¶</a></h2><br/>
+- A version of the RoNIN approach (3d-RoNIN ) is the benchmark used in the article.
+
+
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ddbef4ba">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Metrics">Metrics<a class="anchor-link" href="#Metrics">¶</a></h2><ul>
+<h2 id="Metrics">Metrics<a class="anchor-link" href="#Metrics">¶</a></h2><br/>
+<ul>
 <li>Absolute Translation Error (ATE):</li>
 </ul>
 <p>$$
 \text{ATE} = \sqrt{\frac{1}{n} \sum_{k=1}^n \| p_k^w - \hat p_k^w \|^2}
 $$</p>
 <ul>
-<li><p>Relative Translation Error (RTE) over window <code>t</code>.</p>
+<li><p>Relative Translation Error (RTE(t)):
+$$
+\text{RTE}_{\Delta t} = \sqrt{\frac{1}{n} \sum{i=1}^n \left| ({}^w\mathbf{p}_{i+\Delta t} - {}^w\mathbf{p}_i) - \mathbf{R}_\gamma \hat{\mathbf{R}}_\gamma^T ({}^w\hat{\mathbf{p}}_{i+\Delta t} - {}^w\hat{\mathbf{p}}_i) \right|^2}
+$$</p>
 </li>
-<li><p>Drift rate <code>DR(%)</code> over trajectory length.</p>
+<li><p>Drift Rate (DR):
+$$
+\text{DR}(\%) = \frac{| {}^w\mathbf{p}_n - {}^w\hat{\mathbf{p}}_n |}{\text{trajectory-length}} \times 100
+$$</p>
 </li>
-<li><p>Absolute Yaw Error (AYE).</p>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4ba3f293">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li><p>Absolute Yaw Error (AYE):
+$$
+\text{AYE} = \sqrt{\frac{1}{n} \sum_{i=1}^n | \psi_i - \hat{\psi}_i |^2}
+$$</p>
 </li>
-<li><p>Relative Yaw Error (RYE) per unit time.</p>
+<li><p>Relative Yaw Error (RYE(t)):
+$$
+\text{RYE}_{\Delta t} = \sqrt{\frac{1}{n} \sum{i=1}^n | (\psi_{i+t} - \psi_i) - (\hat{\psi}_{i+t} - \hat{\psi}_i) |^2}
+$$</p>
+</li>
+<li><p>Yaw Drift Rate (Yaw-DR):
+$$
+\text{Yaw-DR} = \frac{| \psi_n - \hat{\psi}_n |}{\text{sequence-duration}}
+$$</p>
 </li>
 <li><p>The paper reports cumulative distribution functions of these metrics over the test set.</p>
 </li>
@@ -7782,42 +7876,50 @@ $$</p>
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3f9c25ba">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="System-Performance">System Performance<a class="anchor-link" href="#System-Performance">¶</a></h2><ul>
-<li>TLIO consistently outperforms 3D-RoNIN on all reported metrics.</li>
-<li>Higher filter update frequency improves ATE and drift, despite measurement correlation.</li>
-<li>The EKF also reduces yaw drift compared to a decoupled attitude filter.</li>
-<li>Key advantages:<ul>
-<li>learned measurement uncertainty improves fusion</li>
-<li>filter robustness to outliers via <code>\chi^2</code> gating</li>
-<li>no handcrafted step detection or gait model required</li>
-</ul>
-</li>
-</ul>
+<h2 id="System-Performance">System Performance<a class="anchor-link" href="#System-Performance">¶</a></h2><br/>
+- TLIO consistently outperforms 3D-RoNIN on all reported metrics.
+- Higher filter update frequency improves ATE and drift, despite measurement correlation.
+- The EKF also reduces yaw drift compared to a decoupled attitude filter.
+- Key advantages:
+  - learned measurement uncertainty improves fusion
+  - filter robustness to outliers via `\chi^2` gating
+  - no handcrafted step detection or gait model required
+
+
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=652c74aa">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Presenter-Comments">Presenter Comments<a class="anchor-link" href="#Presenter-Comments">¶</a></h2><ul>
-<li>This paper shows a strong hybrid approach: learned priors plus classical filtering.</li>
-<li>The EKF uses both model-based IMU propagation and data-driven displacement measurements.</li>
-<li>Gravity-aligned measurements protect the filter from false yaw observability.</li>
-<li>The system is trained on pedestrian motion and remains limited by the training distribution.</li>
-<li>Unusual motions not present in training can still cause failure cases.</li>
-<li>Overall, TLIO demonstrates that IMU-only pose estimation can be improved by learning measurement uncertainty and integrating it tightly in an EKF.</li>
-</ul>
+<h2 id="Presenter-Comments">Presenter Comments<a class="anchor-link" href="#Presenter-Comments">¶</a></h2><br/>
+- There is no clarification on what makes validation and test datasets different 
+- The authors talk about the world frame, but their code (correctly) does not use the visual data to align the dataset with a true world frame, only to the gravity-aligned frame. 
+- Initialisation assumes that the IMU is vertical, --&gt; in real life, that is a poor calibration for the phones.
+- In the update part of the filter, it uses Euler angles --&gt; this architecture can present Gimbal lock 
+
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=645a6661">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 </div>
 </div>
 </div>
@@ -7861,7 +7963,7 @@ require(
         Reveal.addEventListener('slidechanged', update);
 
         function setScrollingSlide() {
-            var scroll = false
+            var scroll = true
             if (scroll === true) {
               var h = $('.reveal').height() * 0.95;
               $('section.present').find('section')
