@@ -71,7 +71,7 @@ if __name__ == "__main__":
             "--root_dir",
             f"{args.root_dir}",
             "--arch",
-            f"{args.arch}",
+            f'{conf["arch"]}',
             "--model_path",
             f"{m}",
             "--out_dir",
@@ -86,11 +86,15 @@ if __name__ == "__main__":
             f'{conf["future_time"]}',
             "--sample_freq",
             f"{sample_freq}",
-            f"{save_plot_arg(args.save_plot)}",
         ]
+        if args.save_plot:
+            command.append("--save_plot")
+            
         logging.info(" ".join(command))
         try:
-            sp.run(command)
-        except Exception as e:
+            result = sp.run(command, check=True)
+            logging.info(f"Finished successfully: {name_run}")
+        except sp.CalledProcessError as e:
+            logging.error(f"Subprocess failed for {name_run}")
             logging.error(e)
             continue
