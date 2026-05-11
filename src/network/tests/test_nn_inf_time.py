@@ -193,10 +193,6 @@ def net_test(args):
     test_list_path = osp.join(args.root_dir, "test_list.txt")
     test_list = get_datalist(test_list_path)
 
-    # ---------------------------------------------------------
-    # Device selection
-    # ---------------------------------------------------------
-
     if torch.backends.mps.is_available():
         device = torch.device("mps")
 
@@ -207,10 +203,6 @@ def net_test(args):
         device = torch.device("cpu")
 
     logging.info(f"Using device: {device}")
-
-    # ---------------------------------------------------------
-    # Load model
-    # ---------------------------------------------------------
 
     checkpoint = torch.load(
         args.model_path,
@@ -234,15 +226,8 @@ def net_test(args):
         f"Model {args.model_path} loaded to device {device}."
     )
 
-    # ---------------------------------------------------------
-    # Benchmark results container
-    # ---------------------------------------------------------
-
     all_metrics = {}
 
-    # ---------------------------------------------------------
-    # Iterate sequences
-    # ---------------------------------------------------------
 
     for data in test_list:
 
@@ -268,9 +253,6 @@ def net_test(args):
             print(e)
             continue
 
-        # -----------------------------------------------------
-        # Benchmark timing only
-        # -----------------------------------------------------
 
         metrics = benchmark_sequence_generation(
             network,
@@ -281,10 +263,6 @@ def net_test(args):
         logging.info(metrics)
 
         all_metrics[data] = metrics
-
-    # ---------------------------------------------------------
-    # Save JSON
-    # ---------------------------------------------------------
 
     try:
 

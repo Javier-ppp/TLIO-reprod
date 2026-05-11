@@ -3,7 +3,7 @@ import os
 import os.path as osp
 import subprocess as sp
 from pathlib import Path
-
+import sys
 from utils.logging import logging
 
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
             model_param_path = str(base_folder) + "/parameters.json"
             meascov_scale = 10
             command = [
-                "python3",
+                sys.executable,
                 "main_filter.py",
                 "--root_dir",
                 f"{args.root_dir}",
