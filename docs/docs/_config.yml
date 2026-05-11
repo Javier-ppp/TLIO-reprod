@@ -1,8 +1,0 @@
-#theme: bulma-clean-theme 
-markdown: kramdown
-remote-theme: chrisrhymes/bulma-clean-theme
-#github: [metadata]
-#sass:
-#  source_dir: ./_sass
-plugins:
-  - jekyll-remote-theme

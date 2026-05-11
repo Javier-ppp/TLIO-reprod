@@ -7,8 +7,10 @@
 > - A Dockerfile to expand on compatibility and reproducibility
 > - Independently (from the research team) generated weights and benchmarks from the original code
 > - A memory efficient mode for the seq2seq ResNet model (allows training on systems with < 16GB VRAM)
-
+> - Script to benchmark inference time (token by token, full seq, avg single token time)
+> - Removed the files for the article's website source code
 We included notes throughout the document to highlight the changes and updates from the original repo. Our notes use the GitHub `[NOTE]` block style, while the notes from the article authors use plain bold text.
+
 ---
 
 <!-- Transition to original text -->

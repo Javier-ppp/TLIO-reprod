@@ -7439,8 +7439,7 @@ main {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="TLIO:-Tight-Learned-Inertial-Odometry">TLIO: Tight Learned Inertial Odometry<a class="anchor-link" href="#TLIO:-Tight-Learned-Inertial-Odometry">¶</a></h1><br/>
 <ul>
 <li>Paper: <code>arXiv:2007.01867v3</code> / IEEE Robotics and Automation Letters, 2020</li>
@@ -7455,8 +7454,7 @@ main {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Introduction-to-Pedestrian-Dead-Reckoning">Introduction to Pedestrian Dead Reckoning<a class="anchor-link" href="#Introduction-to-Pedestrian-Dead-Reckoning">¶</a></h2><br/>
 <ul>
 <li>Pedestrian dead reckoning (PDR) estimates motion from inertial sensors alone.</li>
@@ -7472,8 +7470,7 @@ main {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Dataset:-Collection">Dataset: Collection<a class="anchor-link" href="#Dataset:-Collection">¶</a></h2><br/>
 <ul>
 <li>Collected with a custom rig: Bosch BMI055 IMU mounted on a headset rigidly attached to cameras.</li>
@@ -7490,8 +7487,7 @@ main {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Dataset:-Description">Dataset: Description<a class="anchor-link" href="#Dataset:-Description">¶</a></h2><br/>
 <ul>
 <li>Ground truth from a state-of-the-art visual-inertial filter at 1000 Hz.</li>
@@ -7507,8 +7503,7 @@ main {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Dataset:-Preprocessing">Dataset: Preprocessing<a class="anchor-link" href="#Dataset:-Preprocessing">¶</a></h2><br/>
 <ul>
 <li><p>Training uses overlapping sliding windows of IMU data.</p>
@@ -7533,8 +7528,7 @@ main {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Dataset:-Gravity-Aligned-Frame">Dataset: Gravity-Aligned Frame<a class="anchor-link" href="#Dataset:-Gravity-Aligned-Frame">¶</a></h2><br/>
 <ul>
 <li>IMU samples are rotated to a local gravity-aligned frame built from the orientation at the beginning of each window.</li>
@@ -7556,8 +7550,7 @@ then they compute the rotation matrix $R$ such that $R a = b$:</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <ul>
 <li>Rodrigues' Rotation Formula: $$R = I + [\omega]_\times + \frac{1}{1 + \hat{a} \cdot \hat{b}} ([\omega]_\times)^2$$
 $[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v) helper function -&gt; <code>np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])</code>.</li>
@@ -7570,8 +7563,7 @@ $[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v)
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="System-Design-Overview">System Design Overview<a class="anchor-link" href="#System-Design-Overview">¶</a></h2><br/>
 <ul>
 <li><p>Two main components:</p>
@@ -7593,8 +7585,7 @@ $[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v)
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Neural-Network-Description">Neural Network Description<a class="anchor-link" href="#Neural-Network-Description">¶</a></h2><ul>
 <li><p>Architecture: 1D ResNet18 variant.</p>
 </li>
@@ -7617,8 +7608,7 @@ $[\omega]_\times$: The skew-symmetric matrix of $\omega$ (computed by the hat(v)
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Loss-Functions">Loss Functions<a class="anchor-link" href="#Loss-Functions">¶</a></h2><br/>
 <ul>
 <li>Mean Squared Error (MSE) loss:</li>
@@ -7649,8 +7639,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Stochastic-Cloning">Stochastic Cloning<a class="anchor-link" href="#Stochastic-Cloning">¶</a></h2><br/>
 <ul>
 <li><p>The EKF state includes the current state and a sliding window of past cloned poses.</p>
@@ -7681,8 +7670,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>For the error propagation we apply the error-based filltering method:</p>
 <p>Cloned state error: $$\tilde{\xi}_i = (\tilde{\theta}_i, \tilde{\mathbf{p}}_i)$$</p>
 <p>Current state error: $$\tilde{\mathbf{s}} = (\tilde{\theta}, \tilde{\mathbf{v}}, \tilde{\mathbf{p}}, \tilde{\mathbf{b}}_g, \tilde{\mathbf{b}}_a)$$</p>
@@ -7695,8 +7683,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="EKF-Architecture-and-Equations">EKF Architecture and Equations<a class="anchor-link" href="#EKF-Architecture-and-Equations">¶</a></h2><br/>
 <h3 id="Propagation-model">Propagation model<a class="anchor-link" href="#Propagation-model">¶</a></h3><p>Strapdown inertial kinematics with IMU bias and gravity:</p>
 <p>$$
@@ -7719,8 +7706,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Linearized-propagation">Linearized propagation<a class="anchor-link" href="#Linearized-propagation">¶</a></h3><br/>
 <p>$$
 \tilde s_{k+1} = A_k \tilde s_k + B_k n_k
@@ -7749,8 +7735,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Measurement-model-in-gravity-aligned-frame">Measurement model in gravity-aligned frame<a class="anchor-link" href="#Measurement-model-in-gravity-aligned-frame">¶</a></h3><br/>
 <p>The network predicts a local displacement measurement:</p>
 <p>$$
@@ -7770,8 +7755,7 @@ $$\mathbf{H}_z = \begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ \cos 
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Kalman-update">Kalman update<a class="anchor-link" href="#Kalman-update">¶</a></h3><br/>
 <p>$$
 K = P H^T (H P H^T + \hat \Sigma_{ij})^{-1}
@@ -7794,13 +7778,72 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Experimental-Results">Experimental Results<a class="anchor-link" href="#Experimental-Results">¶</a></h2><br/>
-- Evaluation on the held-out test split of the pedestrian dataset.
-- Comparison against  VIO ground truth and the 3D-RoNIN benchmark.
+<ul>
+<li>The code with the provided environment works well, with the exception of the 3D visualisation module (not compatible with ARM processors)</li>
+<li>The model selection (among the 3 proposed options by the authors) is correct.</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=a68ced52">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<script>
+        window.PlotlyConfig = {MathJaxConfig: 'local'};
+        if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+        </script>
+<script type="module">import "https://cdn.plot.ly/plotly-3.5.0.min"</script>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div> <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script> <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+<script charset="utf-8" crossorigin="anonymous" integrity="sha256-fHbNLP+GlIXN+efbQec78UkemUz3NJp7UmfGxC1tNxs=" src="https://cdn.plot.ly/plotly-3.5.0.min.js"></script> <div class="plotly-graph-div" id="f905132f-6b06-4c6e-9bcd-de68fb555742" style="height:400px; width:100%;"></div> <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("f905132f-6b06-4c6e-9bcd-de68fb555742")) {                    Plotly.newPlot(                        "f905132f-6b06-4c6e-9bcd-de68fb555742",                        [{"line":{"color":"#1f77b4","width":2},"mode":"lines","name":"RESNET Train","x":{"dtype":"i1","bdata":"AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMQ=="},"y":{"dtype":"f8","bdata":"AAAAIHq2mz8AAADgkXKPPwAAACCfSIo\u002fAAAAAAdQhz8AAADgzDmFPwAAAGBnpoM\u002fAAAAAGd9gj8AAABgm1eBPwAAACDprYA\u002fAAAAoBUogD8AAADgeBKAPwAAAKDpIoA\u002fAAAA4KT+fz8AAABgyKl\u002fPwAAAGAdN38\u002fAAAAYLTNfj8AAADgBEh+PwAAAIAK330\u002fAAAAABd2fT8AAADgPhJ9PwAAACAr\u002fHw\u002fAAAAgLmGfD8AAABgPCJ8PwAAACAoBXw\u002fAAAAYMyYez8AAAAgGUJ7PwAAAAAhEXs\u002fAAAAoFbZej8AAACAqWp6PwAAAGC4SXo\u002fAAAAgCzteT8AAACgnNd5PwAAACAUiXk\u002fAAAAoL1ueT8AAACgAAN5PwAAAOAF7Xg\u002fAAAA4OOOeD8AAAAgfm14PwAAAADVJ3g\u002fAAAAgJQNeD8AAAAAFNd3PwAAAKDbpXc\u002fAAAAgEV1dz8AAAAgiD53PwAAAACBZHc\u002fAAAAgFj1dj8AAAAAisV2PwAAACD\u002ff3Y\u002fAAAAoCw8dj8="},"type":"scatter"},{"line":{"color":"#1f77b4","dash":"dot","width":2},"mode":"lines","name":"RESNET Val","opacity":0.7,"x":{"dtype":"i1","bdata":"AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMQ=="},"y":{"dtype":"f8","bdata":"AAAAgHq4lD8AAAAg4p+MPwAAAEA0OYU\u002fAAAAwENegz8AAAAgdKp+PwAAAKAcjoA\u002fAAAA4Hygfz8AAACgNcR5PwAAACBZ8X0\u002fAAAAoEPOeD8AAABgfGZ4PwAAACCvy3g\u002fAAAAYHfAeD8AAADggQp5PwAAAOCUlXc\u002fAAAAYMeldj8AAACgYal1PwAAAKB3Q3o\u002fAAAAICWmdj8AAACgIeV3PwAAAIAe+Xc\u002fAAAA4GeZdT8AAABg0oV1PwAAAODglHQ\u002fAAAAYJxRdD8AAACgvFx1PwAAAKB+ZHM\u002fAAAAYIJWdD8AAAAAy4Z3PwAAAKDKIXQ\u002fAAAA4Gtacz8AAABgpg1zPwAAACCg13Q\u002fAAAAQLpNdD8AAACAnhB1PwAAAAD9l3I\u002fAAAAYHBJcz8AAACgx75yPwAAAOD+dXI\u002fAAAAoIajcj8AAABAz1xyPwAAAGCpXnM\u002fAAAAgLdicj8AAAAAgkFzPwAAACCMjXY\u002fAAAAYINfcj8AAACAUkpyPwAAAMAwbnI\u002fAAAAYE7rcj8="},"type":"scatter"},{"line":{"color":"#d62728","width":2},"mode":"lines","name":"RESNET_SEQ Train","x":{"dtype":"i1","bdata":"AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMQ=="},"y":{"dtype":"f8","bdata":"AAAAINqcxD8AAAAg8zHAPwAAAGACXb8\u002fAAAAIMZGwD8AAAAAd3PAPwAAAKCuC78\u002fAAAAoDGxvD8AAACArg27PwAAAACiprk\u002fAAAAoOEkuD8AAAAgOAe4PwAAAOCBnrc\u002fAAAAgKfvtj8AAAAgOFS2PwAAACBC6bU\u002fAAAAIAV9tT8AAADg0xm1PwAAACDSxbQ\u002fAAAAINhstD8AAACAqBa0PwAAAOChybM\u002fAAAAAB+Rsz8AAACgNVqzPwAAAMDTKbM\u002fAAAAoN0Dsz8AAADAR92yPwAAACDis7I\u002fAAAAQMSUsj8AAACAHneyPwAAAGDoR7I\u002fAAAAgGYosj8AAADgNAeyPwAAACAE6bE\u002fAAAAYIPBsT8AAADAK52xPwAAAODBdrE\u002fAAAAQKdJsT8AAABAlx6xPwAAACAv+7A\u002fAAAAgBfTsD8AAAAAw7OwPwAAAACJmbA\u002fAAAA4NeCsD8AAADAp2iwPwAAAABbULA\u002fAAAAIC86sD8AAADAOR2wPwAAAIDnAbA\u002fAAAAoEvRrz8="},"type":"scatter"},{"line":{"color":"#d62728","dash":"dot","width":2},"mode":"lines","name":"RESNET_SEQ Val","opacity":0.7,"x":{"dtype":"i1","bdata":"AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMQ=="},"y":{"dtype":"f8","bdata":"AAAAgMrOwT8AAAAAIJ3APwAAAGDeocA\u002fAAAAQIFtwj8AAADAQ5TBPwAAAGAxQcA\u002fAAAAADowvT8AAADgB\u002fK7PwAAAKALr7o\u002fAAAAgAt0uT8AAACgISe5PwAAAGDuYrg\u002fAAAAACUIuD8AAACABym3PwAAAODF37Y\u002fAAAAIMcytj8AAABg+bW1PwAAAIB6l7U\u002fAAAA4O79tD8AAACgn4q0PwAAAMCsY7Q\u002fAAAAYOAOtD8AAAAgNoyzPwAAAOBNUrM\u002fAAAAwLMpsz8AAACg4B2zPwAAAMAWDrM\u002fAAAAQCuisj8AAACAFXSyPwAAAOCiYbI\u002fAAAAgCpIsj8AAABgrAiyPwAAAICww7E\u002fAAAAIGC7sT8AAADA45GxPwAAAGCVebE\u002fAAAA4GYZsT8AAADggRGxPwAAAMAny7A\u002fAAAAoH6HsD8AAACAkm6wPwAAACBnW7A\u002fAAAAAPCdsD8AAADgQRKwPwAAAAAI6q8\u002fAAAAYBx7rz8AAAAA8nSvPwAAAOBLM68\u002fAAAA4N9urj8="},"type":"scatter"},{"line":{"color":"#2ca02c","width":2},"mode":"lines","name":"TCN Train","x":{"dtype":"i1","bdata":"AQIDBAUHCAkKCwwNDg8QERITFBUWFxgZGhscHR4fICEiIyQlJicoKSorLC0uLzAx"},"y":{"dtype":"f8","bdata":"AAAAYEEusz8AAADgDluoPwAAAIDbl6Q\u002fAAAAoDoQoj8AAAAA+1CgPwAAAACXyZw\u002fAAAAAKdjmz8AAACAhFmaPwAAAODA\u002fqA\u002fAAAAoK3Tnz8AAADg1C6gPwAAAKCU958\u002fAAAAoGJknz8AAADglbmePwAAAGD6EJ4\u002fAAAAoN2\u002fnT8AAACAPFWdPwAAAKDYBZ0\u002fAAAA4NyrnD8AAAAA7licPwAAAKAtJ5w\u002fAAAAILTvmz8AAABgWLObPwAAAIC7gJs\u002fAAAAYN1Nmz8AAAAg4gabPwAAAKA345o\u002fAAAA4I2jmj8AAABgaXaaPwAAACDYM5o\u002fAAAA4HIhmj8AAAAgoveZPwAAAKD1y5k\u002fAAAAIKCUmT8AAAAAl3KZPwAAAKACNpk\u002fAAAAIAoOmT8AAABgTemYPwAAAIDOy5g\u002fAAAAgBeNmD8AAAAAiW6YPwAAAGA0RZg\u002fAAAAoOYdmD8AAACAU\u002fqXPwAAAAA43Jc\u002fAAAAIDC3lz8AAACAo5aXPwAAAACGYpc\u002f"},"type":"scatter"},{"line":{"color":"#2ca02c","dash":"dot","width":2},"mode":"lines","name":"TCN Val","opacity":0.7,"x":{"dtype":"i1","bdata":"AQIDBAUHCAkKCwwNDg8QERITFBUWFxgZGhscHR4fICEiIyQlJicoKSorLC0uLzAx"},"y":{"dtype":"f8","bdata":"AAAAQGaRoj8AAADg0PWZPwAAAOCjWJQ\u002fAAAAQFyUkT8AAADgGo+PPwAAAICH4os\u002fAAAAAPbEij8AAABgWK6JPwAAAACvP5I\u002fAAAA4EqHkT8AAABgDOCQPwAAAKCjXJA\u002fAAAA4FIwkD8AAACgKhuOPwAAAGAyK40\u002fAAAAIE2Yiz8AAACgCsqKPwAAAKBq7Io\u002fAAAAgPPZiD8AAAAg4h2KPwAAAGCx3Ic\u002fAAAAYCfihz8AAAAgk22HPwAAAABPP4c\u002fAAAA4Mechj8AAAAAfU2GPwAAAOCq+IU\u002fAAAAgDINhj8AAAAgw6GFPwAAAGCdXYU\u002fAAAAoJT0hD8AAADgdDuFPwAAACAcmYQ\u002fAAAAgOhVhD8AAACAK2yEPwAAAGCOAIQ\u002fAAAAwFuRhD8AAABgkfSDPwAAAKBvdoM\u002fAAAAACqhgz8AAABANqqDPwAAAKDrj4M\u002fAAAAoNoigz8AAAAAgiGDPwAAAAA8Q4M\u002fAAAAYEjmgj8AAADgaK6CPwAAAIDb4oI\u002f"},"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"title":{"font":{"size":20,"color":"#222222"},"text":"Model Training Progress (Loss)"},"xaxis":{"tickfont":{"color":"#444444"},"title":{"text":"Steps"},"gridcolor":"#EEEEEE"},"yaxis":{"tickfont":{"color":"#444444"},"title":{"text":"Loss"},"gridcolor":"#EEEEEE"},"margin":{"l":50,"r":50,"t":60,"b":50},"legend":{"yanchor":"top","y":0.99,"xanchor":"right","x":0.99,"bgcolor":"rgba(255,255,255,0.7)"},"paper_bgcolor":"white","plot_bgcolor":"white","height":400,"hovermode":"x unified"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('f905132f-6b06-4c6e-9bcd-de68fb555742');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
 
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
 
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script> </div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cea6450d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Experimental-Results">Experimental Results<a class="anchor-link" href="#Experimental-Results">¶</a></h2><br/>
+<ul>
+<li>Evaluation on the held-out test split of the pedestrian dataset.</li>
+<li>Comparison against  VIO ground truth and the 3D-RoNIN benchmark.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -7809,8 +7852,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="RoNIN-Benchmark">RoNIN Benchmark<a class="anchor-link" href="#RoNIN-Benchmark">¶</a></h2><br/>
 - A version of the RoNIN approach (3d-RoNIN ) is the benchmark used in the article.
 
@@ -7823,8 +7865,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Metrics">Metrics<a class="anchor-link" href="#Metrics">¶</a></h2><br/>
 <ul>
 <li>Absolute Translation Error (ATE):</li>
@@ -7852,8 +7893,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <ul>
 <li><p>Absolute Yaw Error (AYE):
 $$
@@ -7881,8 +7921,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="System-Performance">System Performance<a class="anchor-link" href="#System-Performance">¶</a></h2><br/>
 - TLIO consistently outperforms 3D-RoNIN on all reported metrics.
 - Higher filter update frequency improves ATE and drift, despite measurement correlation.
@@ -7901,8 +7940,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Presenter-Comments">Presenter Comments<a class="anchor-link" href="#Presenter-Comments">¶</a></h2><br/>
 - There is no clarification on what makes validation and test datasets different 
 - The authors talk about the world frame, but their code (correctly) does not use the visual data to align the dataset with a true world frame, only to the gravity-aligned frame. 
@@ -7918,8 +7956,7 @@ $$</p>
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 </div>
 </div>
 </div>
@@ -7963,7 +8000,7 @@ require(
         Reveal.addEventListener('slidechanged', update);
 
         function setScrollingSlide() {
-            var scroll = true
+            var scroll = false
             if (scroll === true) {
               var h = $('.reveal').height() * 0.95;
               $('section.present').find('section')
