@@ -50,13 +50,26 @@ class MeasSourceTorchScript:
                 meas, meas_cov = outputs
             elif type(outputs) == dict:  # New output format
                 meas, meas_cov = outputs["pred"], outputs["pred_log_std"]
-                # If this is the case, the network predicts over the whole window at high frequency.
-                # TODO utilize the whole window measurements. May improve.
-                if meas.dim() == 3:
-                    meas = meas[:, -1]
-                    meas_cov = meas_cov[:, -1]
+            else:
+                # Handle other output formats
+                logging.warning(f"Unexpected output type: {type(outputs)}")
+                if isinstance(outputs, torch.Tensor):
+                    logging.warning(f"Tensor shape: {outputs.shape}, dim: {outputs.dim()}")
+                    # Assume it's just the measurement
+                    meas = outputs
+                    meas_cov = torch.zeros_like(meas)
+                else:
+                    raise ValueError(f"Unsupported output format from model: {type(outputs)}")
 
-            assert meas.dim() == 2  # [B,3]
+            # Handle 3D measurement tensors (sequence of measurements over window)
+            # If this is the case, the network predicts over the whole window at high frequency.
+            # TODO utilize the whole window measurements. May improve.
+            if meas.dim() == 3:
+                meas = meas[:, :, -1]  # Take last time step: [B, 3, T] -> [B, 3]
+                if meas_cov.dim() == 3:
+                    meas_cov = meas_cov[:, :, -1]
+
+            assert meas.dim() == 2, f"Expected meas to be 2D, got shape {meas.shape}, dim {meas.dim()}"  # [B,3]
             assert meas_cov.dim() == 2
 
             meas = meas.cpu().detach().numpy()

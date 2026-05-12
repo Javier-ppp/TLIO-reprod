@@ -3,7 +3,7 @@ import json
 import subprocess as sp
 from pathlib import Path
 from pprint import pprint
-
+import sys
 from utils.logging import logging
 
 
@@ -38,17 +38,19 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    all_outputs_filter = list(
-        Path.cwd().glob(args.filter_dir + "/" + args.runname_globbing)
-    )
+    filter_base = Path(args.filter_dir)
+    all_outputs_filter = [
+        p
+        for p in filter_base.glob(args.runname_globbing)
+        if p.is_dir()
+    ]
     logging.info(f"Found {len(all_outputs_filter)} runs")
 
-    for m in all_outputs_filter:
-        base_folder = Path(m)
+    for base_folder in all_outputs_filter:
         logging.info(base_folder)
         name_run = base_folder.name
         # read parameters
-        with open(base_folder.joinpath("./parameters.json"), "r") as f:
+        with open(base_folder.joinpath("parameters.json"), "r") as f:
             conf_filter = json.load(f)
         pprint(conf_filter)
         if "window_time" in conf_filter.keys():
@@ -57,7 +59,7 @@ if __name__ == "__main__":
             disp_time = args.window_time  # This is default
 
         command = [
-            "python",
+            sys.executable,
             "plot_filter_state.py",
             "--root_dir",
             f"{args.root_dir}",

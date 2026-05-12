@@ -10,7 +10,9 @@ Rerun to generate graphs more efficiently by specifying the folder names that ha
 
 import json
 import os
+import time
 from os import path as osp
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1067,14 +1069,55 @@ def run(args, dataset):
     return metric_map
 
 
+def convert_for_json(obj):
+    if isinstance(obj, dict):
+        return {k: convert_for_json(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [convert_for_json(v) for v in obj]
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    return obj
+
+
+def load_json_safe(path):
+    path = Path(path)
+    if not path.exists():
+        return {}
+    try:
+        with path.open("r") as f:
+            logging.info(f"Loading old metric file at {path}")
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        logging.warning(f"Invalid JSON in {path}: {e}")
+    except ValueError as e:
+        logging.warning(f"Failed to parse JSON in {path}: {e}")
+
+    corrupt_path = path.with_suffix(path.suffix + ".corrupt")
+    if corrupt_path.exists():
+        corrupt_path = path.with_suffix(path.suffix + f".corrupt.{int(time.time())}")
+    os.replace(path, corrupt_path)
+    logging.warning(f"Renamed corrupted metrics file to {corrupt_path}")
+    return {}
+
+
+def write_json_atomic(path, obj, indent=1):
+    path = Path(path)
+    temp_path = path.with_suffix(path.suffix + ".tmp")
+    with temp_path.open("w") as f:
+        json.dump(obj, f, indent=indent)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(temp_path, path)
+
+
 def run_on_each_dataset_and_gather_metrics(args, data_names):
     all_metrics = {}
     # retrieve metric from old, logs, they would be erased if necessary
     # I use the presence of .svg or .png as the flag for something necessary
     if osp.exists(args.log_dir + "/metrics.json"):
-        with open(args.log_dir + "/metrics.json", "r") as f:
-            logging.info(f"Loading old metric file at {args.log_dir + '/metrics.json'}")
-            all_metrics = json.load(f)
+        all_metrics = load_json_safe(args.log_dir + "/metrics.json")
 
     for dataset in progressbar.progressbar(data_names, redirect_stdout=True):
         logging.info(f"Plotting dataset {dataset}")
@@ -1085,8 +1128,7 @@ def run_on_each_dataset_and_gather_metrics(args, data_names):
                 continue
             metric_map = run(args, dataset)
             all_metrics[dataset] = metric_map
-            with open(args.log_dir + "/metrics.json", "w") as f:
-                json.dump(all_metrics, f, indent=1)
+            write_json_atomic(args.log_dir + "/metrics.json", convert_for_json(all_metrics), indent=1)
         except ValueError as e:
             raise e
         except OSError as e:

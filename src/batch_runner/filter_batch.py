@@ -76,7 +76,9 @@ if __name__ == "__main__":
             ]
             logging.info(" ".join(command))
             try:
-                sp.run(command)
+                result = sp.run(command, capture_output=False)
+                if result.returncode != 0:
+                    logging.error(f"Process failed with return code {result.returncode} for model {name_run}")
             except Exception as e:
-                logging.error(e)
+                logging.error(f"Exception running command for model {name_run}: {e}")
                 continue
