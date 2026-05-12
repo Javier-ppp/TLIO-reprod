@@ -49,7 +49,14 @@ Next commands should be run from this environment.
 > ```shell script
 > docker run -it --gpus all -v $(pwd):/app tlio
 > ```
-
+>
+> Then activate the conda environment
+>
+> ```shell script
+> source /opt/conda/etc/profile.d/conda.sh && conda activate tlio
+> ```
+> [!NOTE]
+>  the --visualize command in the `src/main_filter.py` script and others where online visualization is produced requires exra steps and depend on your initial system (Linux, Windows or Mac).
 # Dataset
 
 A dataset is needed in numpy format to run with this code.

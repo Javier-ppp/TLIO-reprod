@@ -15,10 +15,13 @@ RUN apt-get update && apt-get install -y \
     wget \
     git \
     curl \
+    unzip \
     bzip2 \
     ca-certificates \
     build-essential \
     pandoc \
+    libgl1 \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -26,11 +29,23 @@ RUN apt-get update && apt-get install -y \
 ENV CONDA_DIR=/opt/conda
 ENV PATH=$CONDA_DIR/bin:$PATH
 
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
+# Install Miniconda for current architecture
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then \
+        MINICONDA_ARCH="x86_64"; \
+    elif [ "$ARCH" = "aarch64" ]; then \
+        MINICONDA_ARCH="aarch64"; \
+    else \
+        echo "Unsupported architecture: $ARCH"; \
+        exit 1; \
+    fi && \
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${MINICONDA_ARCH}.sh -O miniconda.sh && \
     bash miniconda.sh -b -p $CONDA_DIR && \
     rm miniconda.sh
 
-RUN conda install -n base -c conda-forge mamba -y && \
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    conda install -n base -c conda-forge mamba -y && \
     conda clean -afy
 
 # Set the working directory in the container
