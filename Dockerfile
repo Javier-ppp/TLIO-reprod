@@ -9,41 +9,49 @@ ENV PATH="/opt/conda/bin:${PATH}"
 ARG PATH="/opt/conda/bin:${PATH}"
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Set the working directory in the container
-WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     wget \
     git \
+    curl \
+    bzip2 \
+    ca-certificates \
     build-essential \
-    libgl1 \
-    libglib2.0-0 \
-    libgomp1 \
-    libomp-dev \
     pandoc \
     && rm -rf /var/lib/apt/lists/*
 
+
 # Install Miniconda (handles multiple architectures automatically)
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$(uname -m).sh -O /tmp/miniconda.sh && \
-    bash /tmp/miniconda.sh -b -p /opt/conda && \
-    rm /tmp/miniconda.sh
+ENV CONDA_DIR=/opt/conda
+ENV PATH=$CONDA_DIR/bin:$PATH
+
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
+    bash miniconda.sh -b -p $CONDA_DIR && \
+    rm miniconda.sh
+
+RUN conda install -n base -c conda-forge mamba -y && \
+    conda clean -afy
+
+# Set the working directory in the container
+WORKDIR /app
 
 # Copy environment files
 COPY environment.yaml .
 COPY requirements.txt .
 
-# Create the Conda environment
+# Create the Mamba environment
 # If no NVIDIA hardware is present, PyTorch will automatically default to CPU.
-RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
-    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
-    conda env create -f environment.yaml && \
-    # Ensure pytorch-cuda is installed on x86_64 systems for GPU support
+
+RUN --mount=type=cache,target=/opt/conda/pkgs \
+    mamba env create -f environment.yaml && \
+    conda clean -afy && \
     if [ "$(uname -m)" = "x86_64" ]; then \
-        conda install -n tlio -y pytorch-cuda=12.1 -c pytorch -c nvidia; \
+        mamba install -n tlio -y pytorch-cuda=12.1 -c pytorch -c nvidia; \
     fi && \
     conda clean -afy && \
-    rm -rf /opt/conda/envs/tlio/lib/python3.9/site-packages/open3d/visualization/tensorboard_plugin
+    rm -rf /opt/conda/envs/tlio/lib/python3.9/site-packages/open3d/visualization/tensorboard_plugin && \
+    conda clean -afy
 
 # Make RUN commands use the new environment
 SHELL ["conda", "run", "-n", "tlio", "/bin/bash", "-c"]

@@ -35,7 +35,11 @@ Next commands should be run from this environment.
 
 > [!NOTE]
 > **Comment 1:** For improved compatibility, you can also use Docker. Download Docker [here](https://www.docker.com/products/docker-desktop/) and then build the container using:
->
+> Allow stage biulding for Docker (reduces disk load)
+> ```shell script
+> export DOCKER_BUILDKIT=1
+> ```
+> then build the image 
 > ```shell script
 > docker build -t tlio .
 > ```

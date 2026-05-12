@@ -36,10 +36,8 @@ coverage.xml
 *.cover
 .hypothesis/
 .ipynb_checkpoints
-tlio_golden/
 local_data/
-models/
-docs/node_modules/
-docs/_site/
 .jekyll-cache/
 .sass-cache/
+batch_filter_outputs_uf20
+batch_test_outputs
