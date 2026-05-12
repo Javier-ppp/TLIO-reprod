@@ -8,3 +8,4 @@ tlio_golden
 *outputs*
 .env
 .vscode
+.DS_Store
