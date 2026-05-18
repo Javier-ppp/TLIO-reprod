@@ -35,6 +35,7 @@ if __name__ == "__main__":
         help="window time when no ronin dir exists",
     )
     io_groups.add_argument("--no_make_plots", action="store_true")
+    io_groups.add_argument("--overwrite", action="store_true", help="Overwrite existing runs/plots")
 
     args = parser.parse_args()
 
@@ -80,5 +81,7 @@ if __name__ == "__main__":
             command = command + ["--no-make_plots"]
         else:
             command = command + ["--make_plots"]
+        if args.overwrite:
+            command = command + ["--overwrite"]
         logging.info(" ".join(command))
         sp.run(command)

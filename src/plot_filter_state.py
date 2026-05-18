@@ -193,6 +193,47 @@ def compute_rpe(rpe_ns, ps, ps_gt, yaw, yaw_gt):
     return rpe_rmse, rpe_rmse_z, relative_yaw_rmse
 
 
+def compute_distance_and_mileage(positions_est, positions_gt):
+    """
+    Computes ground truth distance, estimated distance, and mileage percentage.
+    
+    1) Ground truth distance: sum of the module of the displacement step by step.
+    2) Estimated distance: sum of the module of the estimated displacement step by step.
+    3) Mileage: (estimated_distance / ground_truth_distance) * 100%
+    
+    This function robustly handles sequences of 3D positions of shape (N, 3) or (3, N).
+    It returns scalars representing the integrated step-by-step Euclidean distance.
+    """
+    ps_est = np.asarray(positions_est)
+    ps_gt = np.asarray(positions_gt)
+    
+    # Handle single 3D vector (shape (3,) or ndim == 1)
+    if ps_gt.ndim == 1 or ps_est.ndim == 1:
+        # Distance is 0 as there are no steps
+        return 0.0, 0.0, 0.0
+        
+    # If inputs are shape (3, N) instead of (N, 3), transpose them
+    if ps_gt.shape[0] == 3 and ps_gt.shape[1] != 3:
+        ps_gt = ps_gt.T
+    if ps_est.shape[0] == 3 and ps_est.shape[1] != 3:
+        ps_est = ps_est.T
+        
+    # Compute step-by-step displacement vectors: shape (N-1, 3)
+    diff_gt = ps_gt[1:, :] - ps_gt[:-1, :]
+    # Sum of the step-by-step Euclidean displacement modules (scalar path distance)
+    dist_gt = float(np.sum(np.linalg.norm(diff_gt, axis=1)))
+    
+    diff_est = ps_est[1:, :] - ps_est[:-1, :]
+    dist_est = float(np.sum(np.linalg.norm(diff_est, axis=1)))
+    
+    if dist_gt > 0:
+        mileage = (dist_est / dist_gt) * 100.0
+    else:
+        mileage = 0.0
+        
+    return dist_gt, dist_est, mileage
+
+
 def run(args, dataset):
     plt.close("all")
     if args.dir is not None:
@@ -538,12 +579,23 @@ def run(args, dataset):
     metric_map["filter"]["sequence_duration_s"] = ts[-1] - ts[0]
     metric_map["filter"]["num_updates"] = np.sum(~np.isnan(innos[:, 0]))
     metric_map["filter"]["per_update_time_ms"] = (ts[-1] - ts[0]) / metric_map["filter"]["num_updates"] * 1000
+    
+    # Compute ground truth distance, estimated distance, and mileage for filter
+    dist_gt, dist_filter, mileage_filter = compute_distance_and_mileage(ps_filter, ps_gt)
+    metric_map["filter"]["ground_truth_distance"] = dist_gt
+    metric_map["filter"]["estimated_distance"] = dist_filter
+    metric_map["filter"]["mileage"] = mileage_filter
+    metric_map["filter"]["millage"] = mileage_filter
+
     logging.info(f"drift of filter {metric_map['filter']['drift_ratio']}")
     logging.info(f"ATE of filter {metric_map['filter']['ate']}")
     logging.info(f"Mean Heading error of filter {metric_map['filter']['mhe']}")
     logging.info(f"Sequence duration: {metric_map['filter']['sequence_duration_s']} s")
     logging.info(f"Number of updates: {metric_map['filter']['num_updates']}")
     logging.info(f"Per update time: {metric_map['filter']['per_update_time_ms']} ms")
+    logging.info(f"ground truth distance: {metric_map['filter']['ground_truth_distance']:.2f} m")
+    logging.info(f"estimated distance of filter: {metric_map['filter']['estimated_distance']:.2f} m")
+    logging.info(f"mileage (millage) of filter: {metric_map['filter']['mileage']:.2f}%")
 
     def compute_rpe_filter(ns_rpe):
         rpe_rmse, rpe_rmse_z, relative_yaw_rmse = compute_rpe(
@@ -585,12 +637,22 @@ def run(args, dataset):
         metric_map["ronin"]["sequence_duration_s"] = ronin_ts[-1] - ronin_ts[0]
         metric_map["ronin"]["num_updates"] = len(ronin_ts)
         metric_map["ronin"]["per_update_time_ms"] = (ronin_ts[-1] - ronin_ts[0]) / len(ronin_ts) * 1000
+        
+        # Compute ground truth distance, estimated distance, and mileage for ronin
+        _, dist_ronin, mileage_ronin = compute_distance_and_mileage(ps_ronin, ps_gt)
+        metric_map["ronin"]["ground_truth_distance"] = dist_gt
+        metric_map["ronin"]["estimated_distance"] = dist_ronin
+        metric_map["ronin"]["mileage"] = mileage_ronin
+        metric_map["ronin"]["millage"] = mileage_ronin
+
         logging.info(f"drift of ronin {metric_map['ronin']['drift_ratio']}")
         logging.info(f"ATE of ronin {metric_map['ronin']['ate']}")
         logging.info(f"Mean Heading error of ronin {metric_map['ronin']['mhe']}")
         logging.info(f"RoNIN sequence duration: {metric_map['ronin']['sequence_duration_s']} s")
         logging.info(f"RoNIN number of updates: {metric_map['ronin']['num_updates']}")
         logging.info(f"RoNIN per update time: {metric_map['ronin']['per_update_time_ms']} ms")
+        logging.info(f"estimated distance of ronin: {metric_map['ronin']['estimated_distance']:.2f} m")
+        logging.info(f"mileage (millage) of ronin: {metric_map['ronin']['mileage']:.2f}%")
 
         def compute_rpe_ronin(ns_rpe):
             rpe_rmse, rpe_rmse_z, relative_yaw_rmse = compute_rpe(
@@ -1123,7 +1185,7 @@ def run_on_each_dataset_and_gather_metrics(args, data_names):
         logging.info(f"Plotting dataset {dataset}")
         try:
             results_folder = os.path.join(args.log_dir, dataset)
-            if osp.exists(osp.join(results_folder, "position-3d.png")):
+            if not args.overwrite and osp.exists(osp.join(results_folder, "position-3d.png")):
                 logging.info(f"Skipping {dataset} because alraedy processed")
                 continue
             metric_map = run(args, dataset)
@@ -1224,6 +1286,7 @@ if __name__ == "__main__":
 
     # make plots / or just gathering metrics
     add_bool_arg(parser, "make_plots", default=True)
+    add_bool_arg(parser, "overwrite", default=False)
 
     # display selections
     add_bool_arg(parser, "save_fig", default=True)
