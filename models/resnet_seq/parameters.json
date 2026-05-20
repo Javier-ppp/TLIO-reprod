@@ -2,11 +2,11 @@
     "accel_bias_range": 0.2,
     "arch": "resnet_seq",
     "batch_size": 1024,
-    "continue_from": null,
+    "continue_from": "models/resnet_seq/saved_models/checkpoint_best.pt",
     "cpu": false,
     "dataset_style": "mmap",
     "do_bias_shift": true,
-    "epochs": 50,
+    "epochs": 100,
     "future_time": 0.0,
     "gyro_bias_range": 0.05,
     "imu_base_freq": 1000.0,
@@ -15,7 +15,7 @@
     "lr": 0.0001,
     "mode": "train",
     "model_path": null,
-    "out_dir": "outputs/resnet_seq",
+    "out_dir": "models/resnet_seq",
     "out_name": null,
     "output_dim": 3,
     "past_time": 0.0,
@@ -27,5 +27,5 @@
     "sample_freq": 20.0,
     "save_plot": true,
     "window_time": 1.0,
-    "workers": 1
+    "workers": 2
 }
