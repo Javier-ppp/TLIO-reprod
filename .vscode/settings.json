@@ -1,8 +1,0 @@
-{
-    "chat.tools.terminal.autoApprove": {
-        "/^cd /Users/javierpenuela/Documents/TLIO-reprod && python - <<'PY'\nimport importlib\nfor pkg in \\['pdfplumber','fitz','PyPDF2','pdfminer\\.high_level'\\]:\n    try:\n        m=importlib\\.import_module\\(pkg\\)\n        print\\(pkg, 'OK'\\)\n    except Exception as e:\n        print\\(pkg, 'NO', e\\.__class__\\.__name__\\)\nPY$/": {
-            "approve": true,
-            "matchCommandLine": true
-        }
-    }
-}
